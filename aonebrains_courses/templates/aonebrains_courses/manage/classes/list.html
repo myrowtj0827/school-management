@@ -1,0 +1,302 @@
+<!-- aonebrains_courses/templates/aonebrains_courses/managecontent/classes/list.html -->
+
+{% extends "base.html" %}
+{% load widget_tweaks static %}
+{% load static %}
+
+{% block title %}
+    Classes
+{% endblock %}
+{% block content %}
+
+    <div class="mdk-drawer-layout__content page subject_page">
+        <div class="container-fluid">
+
+            <div class="w3-card-4"
+                 style="background-image: linear-gradient(45deg, #2e89fe, #8900fe 50%, #00e8fe); border-radius: 15px;">
+                <h1 class="h2 w3-center" style="color: #06f26a;">Classes</h1>
+            </div>
+            <div class="fresh-table full-screen-table table-bordered"
+                 style="background-image: linear-gradient(to top, #dfe9f3 0%, white 100%); border-radius: 15px;">
+
+                <!-- +++++++++++++++++++++++++++++  Back & Up & Previous Button creating start  ++++++++++++++++++++++++++++++++-->
+                <div class="toolbar" data-toggle="lists" data-lists-values='["js-lists-values-employee-name"]'>
+                    <div class="w3-btn example_d btn_admins w3-left" style="text-decoration-line: none;"
+                         onclick="history.back()">
+                        <a><i class="fas fa-arrow-left"></i> Back</a>
+                    </div>
+
+                    {% if not request.user.is_anonymous %}
+                        {% if request.user.account_type == 'admin' %}
+
+                            <a class="w3-btn example_d btn_admins w3-left" href="{% url "accounts:admin_dashboard" %}"
+                               style="color: white; text-decoration-line: none; background: #544CD0;">
+                                Up <i class="fas fa-arrow-up"></i>
+                            </a>
+
+                        {% elif request.user.account_type == 'super admin' %}
+                            <a class="w3-btn example_d btn_admins w3-left"
+                               href="{% url "accounts:super_admin_dashboard" %}"
+                               style="color: white; text-decoration-line: none; background: #544CD0;">
+                                Up <i class="fas fa-arrow-up"></i>
+                            </a>
+
+                        {% elif request.user.account_type == 'editor' %}
+
+                            <a class="w3-btn example_d btn_admins w3-left" href="{% url "accounts:editor_dashboard" %}"
+                               style="color: white; text-decoration-line: none; background: #544CD0;">
+                                Up <i class="fas fa-arrow-up"></i></a>
+
+                        {% elif request.user.account_type == 'school' %}
+                            <a class="w3-btn example_d btn_admins w3-left" href="{% url "schools:dashboard" %}"
+                               style="color: white; text-decoration-line: none; background: #544CD0;">
+                                Up <i class="fas fa-arrow-up"></i></a>
+
+                        {% elif request.user.account_type == 'teacher' %}
+                            <a class="w3-btn example_d btn_admins w3-left" href="{% url "schools:teachers:dashboard" %}"
+                               style="color: white; text-decoration-line: none; background: #544CD0;">
+                                Up <i class="fas fa-arrow-up"></i>
+                            </a>
+
+                        {% elif request.user.account_type == 'curator' %}
+                            <a class="w3-btn example_d btn_admins w3-left" href="{% url "accounts:curator_dashboard" %}"
+                               style="color: white; text-decoration-line: none; background: #544CD0;">
+                                Up <i class="fas fa-arrow-up"></i></a>
+
+                        {% elif request.user.account_type == 'marketer' %}
+                            <a class="w3-btn example_d btn_admins w3-left"
+                               href="{% url "accounts:marketer_dashboard" %}"
+                               style="color: white; text-decoration-line: none; background: #544CD0;">
+                                Up <i class="fas fa-arrow-up"></i></a>
+                        {% endif %}
+                    {% endif %}
+
+                    <div class="w3-btn example_d btn_admins w3-left" style="text-decoration-line: none;"
+                         onclick="history.forward()">
+                        <a>GoForward <i class="fas fa-arrow-right"></i></a>
+                    </div>
+
+                    <div class="w3-btn example_d btn_admins w3-left w3-light-green"
+                         data-toggle="modal" data-target="#exampleModalCenter">
+                        <a style="font-weight: bold">Add Class</a>
+                    </div>
+                </div>
+                <!-- +++++++++++++++++++++++++++++  Back & Up & Previous Button creating end  ++++++++++++++++++++++++++++++++-->
+                <table id="fresh-table" class="w3-table">
+                    <thead style="color: black; font-size: 16px;">
+                    <th data-field="subject">Class</th>
+                    <th data-field="courses">Courses</th>
+                    <th data-field="status">Options</th>
+                    </thead>
+                    <tbody class="list" id="search" style="color: black; font-size: 14px;">
+                    {% for grade in classes %}
+                        <tr>
+                            <td>
+                                {% if grade.opencourse_set.count > 0 %}
+                                    <a class="w3-tooltip js-lists-values-employee-name"
+                                       href="{% url 'aonebrains_courses:class_courses_list' grade.slug %}"
+                                       style="color: black; font-weight: bold; text-decoration: none;">{{ grade.title }}
+                                        <span style="position: absolute; left: 60px; width: 100px; bottom: 18px; color: yellow; background: #0a6ebd; border-radius: 10px;"
+                                              class="w3-text w3-tag">Courses List</span>
+                                    </a>
+                                {% else %} {{ grade.title }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if grade.opencourse_set.count > 0 %}
+                                    <a href="{% url 'aonebrains_courses:class_courses_list' grade.slug %}"
+                                       style="color: black; margin-left: 10px;">{{ grade.opencourse_set.count }}</a>
+                                {% else %}
+                                    <a style="margin-left: 10px;"> 0 </a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a class="w3-tooltip w3-text-yellow"
+                                   href="{% url 'aonebrains_courses:grade_delete' grade.slug %}">&nbsp;
+                                    <i data-toggle="tooltip" title="Delete Class" class="fa fa-trash"></i>
+                                    <span style="position:absolute; right:30px; width: 160px; bottom:18px; color: red;background: #8fdf82; border-radius: 10px;"
+                                          class="w3-text w3-tag">Do you want to delete "{{ grade.title }}" Class?</span>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++  Add-Modal Start  ++++++++++++++++++++++++++++++++++++++++++++-->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);">
+                <div class="modal-header"
+                     style="background-image: linear-gradient(-225deg, #3D4E81 0%, #5753C9 48%, #6E7FF3 100%);">
+                    <h5 class="modal-title" id="exampleModalLongTitle" style="color: white;">Classes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% if form.non_field_errors %}
+                    <ul class='form-errors'>
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <div class="modal-body">
+                    <form action="." novalidate method="post">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="form-group">
+                                <label class="form-label" for="username"><a style="color: black;">{{ field.label }}:</a></label>
+                                <div class="input-group input-group-merge">
+                                    {{ field|add_class:"form-control form-control-prepended" }}
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="modal-footer">
+                            <button type="button" class="w3-btn example_d btn_editors" style="outline: none;"
+                                    data-dismiss="modal">Close
+                            </button>
+                            <button type="submit" class="w3-btn example_d btn_courses" style="outline: none;">Save
+                                changes
+                            </button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- +++++++++++++++++++++++++++++++++++++++++++  Add-Modal End  ++++++++++++++++++++++++++++++++++++++++++++-->
+
+    <!-- Javascript -->
+    <script src="{% static "vendor/jquery.min.js" %}"></script>
+    <script src="{% static "vendor/bootstrap-table.min.js" %}"></script>
+
+    <script type="text/javascript">
+        const $table = $('#fresh-table');
+        const $alertBtn = $('#alertBtn');
+
+        window.operateEvents = {
+            'click .like': function (e, value, row, index) {
+                alert('You click like icon, row: ' + JSON.stringify(row))
+                console.log(value, row, index)
+            },
+            'click .edit': function (e, value, row, index) {
+                alert('You click edit icon, row: ' + JSON.stringify(row))
+                console.log(value, row, index)
+            },
+            'click .remove': function (e, value, row, index) {
+                $table.bootstrapTable('remove', {
+                    field: 'id',
+                    values: [row.id]
+                })
+            }
+        }
+
+        function operateFormatter(value, row, index) {
+            return [
+                '<a rel="tooltip" title="Like" class="table-action like" href="javascript:void(0)" title="Like">',
+                '<i class="fa fa-heart"></i>',
+                '</a>',
+                '<a rel="tooltip" title="Edit" class="table-action edit" href="javascript:void(0)" title="Edit">',
+                '<i class="fa fa-edit"></i>',
+                '</a>',
+                '<a rel="tooltip" title="Remove" class="table-action remove" href="javascript:void(0)" title="Remove">',
+                '<i class="fa fa-remove"></i>',
+                '</a>'
+            ].join('')
+        }
+
+        $(function () {
+            $table.bootstrapTable({
+                classes: 'table table-hover table-striped',
+                toolbar: '.toolbar',
+
+                search: true,
+                showRefresh: true,
+                showToggle: true,
+                showColumns: true,
+                pagination: true,
+                striped: true,
+                sortable: true,
+                pageSize: 8,
+                pageList: [8, 10, 25, 50, 100],
+
+                formatShowingRows: function (pageFrom, pageTo, totalRows) {
+                    return ''
+                },
+                formatRecordsPerPage: function (pageNumber) {
+                    return pageNumber + ' rows visible'
+                }
+            })
+
+            $alertBtn.click(function () {
+                alert('You pressed on Alert')
+            })
+        })
+
+    </script>
+
+    <!-- Fonts and icons -->
+    <style>
+        [dir=ltr] .modal-backdrop {
+            position: unset !important;
+        }
+
+        .subject_page {
+            align-content: center;
+            width: 100%;
+        }
+
+        .example_d {
+            text-transform: uppercase;
+            border-radius: 12px;
+            display: inline-block;
+            transition: all 0.3s ease 0s;
+            margin: 10px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .example_d:hover {
+            color: green !important;
+            border-radius: 50px;
+            border-color: #494949 !important;
+            transition: all 0.3s ease 0s;
+        }
+
+        .btn_admins {
+            background-color: #544CD0;
+        }
+
+        .btn_courses {
+            background-color: #4089d0;
+        }
+
+        .btn_editors {
+            background-color: #f0ba11;
+        }
+
+        .animation_effect {
+        {#background-color: #f1f2f6;#} padding-bottom: 20vh;
+            animation: slide-up 2s;
+        }
+
+        @keyframes slide-up {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+{% endblock %}

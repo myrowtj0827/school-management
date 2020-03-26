@@ -1,0 +1,283 @@
+<!-- aonebrains_courses/templates/aonebrains_courses/manage/course/list.html -->
+
+{% extends "base.html" %}
+{% load widget_tweaks static %}
+
+{% block title %}
+    My courses
+{% endblock %}
+
+{% block content %}
+    {#    <link type="text/css" href="{% static "css/tables/w3-css.css" %}" rel="stylesheet">#}
+    {#    <link type="text/css" href="{% static "css/tables/table.css" %}" rel="stylesheet">#}
+    {#    <link type="text/css" href="{% static "css/tables/super_admin_style.css" %}" rel="stylesheet">#}
+    <div class="mdk-drawer-layout__content subject_page">
+        <div class="container-fluid">
+            <div class="w3-card-4"
+                 style="background-image: linear-gradient(45deg, #2e89fe, #8900fe 50%, #00e8fe); border-radius: 15px;">
+                <h1 class="h2 w3-center" style="color: #06f26a; font-weight: bold;">My Courses</h1>
+            </div>
+            <div class="fresh-table full-screen-table full-color-blue table-bordered"
+                 style="background-image: linear-gradient(to top, #9890e3 0%, #b1f4cf 100%); border-radius: 15px;">
+                <!-- ++++++++++++++++++++++++++++ ++++++++++++++++++++++++++++++++++ -->
+                <div class="w3-btn example_d btn_admins w3-left" style="text-decoration-line: none;"
+                     onclick="history.back()">
+                    <a><i class="fas fa-arrow-left"></i> Back</a>
+                </div>
+                {% if not request.user.is_anonymous %}
+                    {% if request.user.account_type == 'admin' %}
+
+                        <a class="w3-btn example_d btn_admins w3-left" href="{% url "accounts:admin_dashboard" %}"
+                           style="text-decoration-line: none; background: #544CD0; color: white;">
+                            Up <i class="fas fa-arrow-up"></i>
+                        </a>
+
+                    {% elif request.user.account_type == 'super admin' %}
+                        <a class="w3-btn example_d btn_admins w3-left"
+                           href="{% url "accounts:super_admin_dashboard" %}"
+                           style="text-decoration-line: none; background: #544CD0; color: white;">
+                            Up <i class="fas fa-arrow-up"></i>
+                        </a>
+
+                    {% elif request.user.account_type == 'editor' %}
+
+                        <a class="w3-btn example_d btn_admins w3-left" href="{% url "accounts:editor_dashboard" %}"
+                           style="text-decoration-line: none; background: #544CD0; color: white;">
+                            Up <i class="fas fa-arrow-up"></i>
+                        </a>
+
+                    {% elif request.user.account_type == 'school' %}
+                        <a class="w3-btn example_d btn_admins w3-left" href="{% url "schools:dashboard" %}"
+                           style="text-decoration-line: none; background: #544CD0; color: white;">
+                            Up <i class="fas fa-arrow-up"></i>
+                        </a>
+
+                    {% elif request.user.account_type == 'teacher' %}
+                        <a class="w3-btn example_d btn_admins w3-left" href="{% url "schools:teachers:dashboard" %}"
+                           style="text-decoration-line: none; background: #544CD0; color: white;">
+                            Up <i class="fas fa-arrow-up"></i>
+                        </a>
+
+                    {% elif request.user.account_type == 'curator' %}
+                        <a class="w3-btn example_d btn_admins w3-left" href="{% url "accounts:curator_dashboard" %}"
+                           style="text-decoration-line: none; background: #544CD0; color: white;">
+                            Up <i class="fas fa-arrow-up"></i>
+                        </a>
+
+                    {% elif request.user.account_type == 'marketer' %}
+                        <a class="w3-btn example_d btn_admins w3-left"
+                           href="{% url "accounts:marketer_dashboard" %}"
+                           style="text-decoration-line: none; background: #544CD0; color: white;">
+                            Up <i class="fas fa-arrow-up"></i>
+                        </a>
+                    {% endif %}
+                {% endif %}
+
+                <div class="w3-btn example_d btn_admins w3-left" style="text-decoration-line: none;"
+                     onclick="history.forward()">
+                    <a>GoForward <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <!-- ++++++++++++++++++++++++++++++++  ++++++++++++++++++++++++++++++++++++ -->
+
+                <div class="toolbar" data-toggle="lists" data-lists-values='["js-lists-values-employee-name"]'>
+                    <button type="button" class="w3-btn example_d btn_curators float-right w3-light-green"
+                            data-toggle="modal" data-target="#exampleModalCenter" style="border-radius: 10px; margin-top: -5px;">
+                        <a href="{% url "aonebrains_courses:course_create" %}"
+                           style="text-decoration: none; color: white; font-weight: bold; font-size: 16px; outline: none;">Create New Courses</a>
+                    </button>
+                </div>
+                <!--
+                  Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange
+                  Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
+                -->
+                <table id="fresh-table" class="w3-table">
+                    <thead style="font-size: 16px; color: black;">
+                    <th data-field="course" style="width: 170px;">Course Edit</th>
+                    <th data-field="class" style="width: 120px;">Class</th>
+                    <th data-field="subject" style="width: 100px;">Subject</th>
+                    <th data-field="Draft" style="width: 80px;">Draft</th>
+                    <th data-field="options" style="width: 120px;">Options</th>
+                    </thead>
+                    <tbody class="list" id="search" style="font-size: 14px;">
+                    {% for course in object_list %}
+                        <tr style="color: black;">
+                            <td>
+                                <a class="w3-tooltip js-lists-values-employee-name" data-toggle="tooltip" title="course Detail"
+                                   href="{% url "aonebrains_courses:curator_course_edit" course.slug %}"
+                                   style="color: black; font-weight: bold;">
+                                    {{ course.title }}
+                                    <span style="position: absolute; left: 115px; width: 90px; bottom: 18px; color: yellow; background: #0a6ebd; border-radius: 10px;"
+                                              class="w3-text w3-tag">Course Edit</span>
+                                </a>
+                            </td>
+                            <td><a style="margin-left: 12px; color: black;">{{ course.grade }}</a></td>
+                            <td><a style="margin-left: 12px; color: black;">{{ course.subject }}</a></td>
+                            <td><a style="margin-left: 12px; color: black;">{{ course.draft }}</a></td>
+                            <td>
+                                {#                                <a href="{% url "aonebrains_courses:curator_course_delete" course.slug %}">#}
+                                {#                                    <i class="fa fa-trash" style="margin-left: 10px; color: black;"></i></a>#}
+                                {#                                <a href="{% url "aonebrains_courses:curator_course_module_list" course.slug %}">#}
+                                {#                                    <img data-toggle="tooltip" title="Modules List"#}
+                                {#                                         src="{% static "icons/Modules.svg" %}" style="width: 20px"></a>#}
+                                {#                                <a href="{% url "aonebrains_quiz:quiz_list" course.slug %}" data-toggle="tooltip"#}
+                                {#                                   title="Quiz List">#}
+                                {#                                    <img src="{% static "icons/Quiz.svg" %}" style="width: 20px"></a>#}
+
+                                <a class="w3-tooltip w3-text-yellow"
+                                   href="{% url "aonebrains_courses:curator_course_delete" course.slug %}">
+                                    <i class="fa fa-trash" style="margin-left: 10px; color: yellowgreen;"></i>
+                                    <span style="position: absolute; right: 30px; width: 160px; bottom: 18px; color: red; background: #dfdf82; border-radius: 10px;"
+                                          class="w3-text w3-tag">"{{ course.title }}" Course Delete</span>
+                                </a>
+                                <a class="w3-tooltip w3-text-yellow"
+                                   href="{% url "aonebrains_courses:curator_course_module_list" course.slug %}">
+                                    <img data-toggle="tooltip" title="Modules List"
+                                         src="{% static "icons/Modules.svg" %}" style="width: 20px; margin-left: 20px;">
+                                    <span style="position:absolute; right:30px; width: 160px; bottom:18px; color: red; background: #8fdf82; border-radius: 10px;"
+                                          class="w3-text w3-tag">"{{ course.title }}" Course Module</span>
+                                </a>
+                                <a class="w3-tooltip w3-text-yellow"
+                                   href="{% url "aonebrains_quiz:quiz_list" course.slug %}">
+                                    <img src="{% static "icons/Quiz.svg" %}" style="width: 20px; margin-left: 20px;">
+                                    <span style="position:absolute; right:30px; width: 160px; bottom:18px; color: red; background: #3fdf82; border-radius: 10px;"
+                                          class="w3-text w3-tag">"{{ course.title }}" Course Quiz</span>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <style>
+        [dir=ltr] .modal-backdrop {
+            position: unset !important;
+        }
+    </style>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++  Modal End  ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Javascript -->
+    <script src="{% static "vendor/jquery.min.js" %}"></script>
+    <script src="{% static "vendor/bootstrap-table.min.js" %}"></script>
+
+    <script type="text/javascript">
+        const $table = $('#fresh-table');
+        const $alertBtn = $('#alertBtn');
+
+        window.operateEvents = {
+            'click .like': function (e, value, row, index) {
+                alert('You click like icon, row: ' + JSON.stringify(row))
+                console.log(value, row, index)
+            },
+            'click .edit': function (e, value, row, index) {
+                alert('You click edit icon, row: ' + JSON.stringify(row))
+                console.log(value, row, index)
+            },
+            'click .remove': function (e, value, row, index) {
+                $table.bootstrapTable('remove', {field: 'id', values: [row.id]})
+            }
+        }
+
+        function operateFormatter(value, row, index) {
+            return [
+                '<a rel="tooltip" title="Like" class="table-action like" href="javascript:void(0)" title="Like">',
+                '<i class="fa fa-heart"></i>',
+                '</a>',
+                '<a rel="tooltip" title="Edit" class="table-action edit" href="javascript:void(0)" title="Edit">',
+                '<i class="fa fa-edit"></i>',
+                '</a>',
+                '<a rel="tooltip" title="Remove" class="table-action remove" href="javascript:void(0)" title="Remove">',
+                '<i class="fa fa-remove"></i>',
+                '</a>'
+            ].join('')
+        }
+
+        $(function () {
+            $table.bootstrapTable({
+                classes: 'table table-hover table-striped',
+                toolbar: '.toolbar',
+
+                search: true,
+                showRefresh: true,
+                showToggle: true,
+                showColumns: true,
+                pagination: true,
+                striped: true,
+                sortable: true,
+                pageSize: 8,
+                pageList: [8, 10, 25, 50, 100],
+
+                formatShowingRows: function (pageFrom, pageTo, totalRows) {
+                    return ''
+                },
+                formatRecordsPerPage: function (pageNumber) {
+                    return pageNumber + ' rows visible'
+                }
+            })
+
+            $alertBtn.click(function () {
+                alert('You pressed on Alert')
+            })
+        })
+    </script>
+    <!-- Fonts and icons -->
+    <style>
+        [dir=ltr] .modal-backdrop {
+            position: unset !important;
+        }
+
+        .subject_page {
+            align-content: center;
+            width: 100%;
+        }
+
+        .example_d {
+            text-transform: uppercase;
+            border-radius: 12px;
+            display: inline-block;
+            transition: all 0.3s ease 0s;
+            margin: 20px;
+            color: white;
+            font-weight: bold;
+            {#box-shadow: 1vw 1vw 1vw 1vw;#}
+        }
+
+        .example_d:hover {
+            color: green !important;
+            border-radius: 20px;
+            border-color: #494949 !important;
+            transition: all 0.3s ease 0s;
+        }
+
+        .btn_curators {
+            background-color: #c43c2d;
+        }
+
+        .btn_admins {
+            background-color: #544CD0;
+        }
+
+        .animation_effect {
+            {#background-color: #f1f2f6;#}
+            padding-bottom: 20vh;
+            animation: slide-up 2s;
+        }
+
+        @keyframes slide-up {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+
+{% endblock %}
+
+
+

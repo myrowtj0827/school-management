@@ -1,0 +1,17 @@
+{% if not request.user.is_anonymous %}
+{% if request.user.account_type == 'admin' %}
+ 	href="{% url "accounts:admin_dashboard" %}"
+{% elif request.user.account_type == 'super admin' %}
+ 	 href="{% url "accounts:super_admin_dashboard" %}"
+{% elif request.user.account_type == 'editor' %}
+	href="{% url "accounts:editor_dashboard" %}"
+{% elif request.user.account_type == 'school' %}
+	href="{% url "schools:dashboard" %}"
+{% elif request.user.account_type == 'teacher' %}
+	href="{% url "schools:teachers:dashboard" %}"
+{% elif request.user.account_type == 'curator' %}
+	 href="{% url "accounts:curator_dashboard" %}"
+
+{% elif request.user.account_type == 'marketer' %}
+	href="{% url "accounts:marketer_dashboard" %}"
+{% endif %}

@@ -1,0 +1,372 @@
+{% extends "base.html" %}
+
+{% block title %}
+    SuperAdmin Dashboard
+{% endblock %}
+
+{% block content %}
+
+    <div class="w3-col mdk-drawer-layout__content page">
+        <div class="w3-card"
+             style="background-image: linear-gradient(45deg, #2e89fe, #8900fe 50%, #00e8fe); border-radius: 10px; margin-bottom: 40px;">
+            <h1 class="h2 w3-center" style="color: #06f26a;">SuperAdmin Dashboard</h1>
+
+            <!-- +++++++++++++++++++++++++++++ Dashboard Button Start ++++++++++++++++++++++++++++++++++++++++ -->
+            <div class="w3-container w3-center">
+                <div class="w3-btn example_d btn_admins w3-left" style="text-decoration-line: none; margin-right: 10px;"
+                     onclick="history.back()">
+                    <a><i class="fas fa-arrow-left"></i></a>
+                </div>
+
+                <div class="w3-btn example_d btn_admins w3-left" style="text-decoration-line: none;"
+                     onclick="history.forward()">
+                    <a><i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="w3-bar">
+                    <div id="headingUnfiled" class="w3-bar-item w3-btn example_d btn_courses" data-toggle="collapse"
+                         href="#collapseUnfiled" style="text-decoration: none; outline: none; margin-right: 50px;"
+                         target="_blank" rel="nofollow noopener">
+                        COURSES
+                    </div>
+                    <div id="heading79" class="w3-bar-item w3-btn example_d btn_editors" data-toggle="collapse"
+                         href="#collapse79" style="text-decoration: none; outline: none; margin-right: 50px;"
+                         target="_blank" rel="nofollow noopener">EDITORS
+                    </div>
+                    <div id="heading80" class="w3-bar-item w3-btn example_d btn_quizzes" data-toggle="collapse"
+                         href="#collapse80" style="text-decoration: none; outline: none; margin-right: 50px;"
+                         target="_blank"
+                         rel="nofollow noopener">QUIZZES
+                    </div>
+                    <div id="heading81" class="w3-bar-item w3-btn example_d btn_curators" data-toggle="collapse"
+                         href="#collapse81" style="text-decoration: none; outline: none;" target="_blank"
+                         rel="nofollow noopener">
+                        CURATORS
+                    </div>
+                </div>
+
+            </div>
+            <!-- +++++++++++++++++++++++++++++  Dashboard Button end  ++++++++++++++++++++++++++++++++++++++++ -->
+
+        </div>
+        <div class="container page__container">
+            <!--Accordion wrapper-->
+            <div class="w3-row accordion md-accordion accordion-blocks" id="accordionEx78" role="tablist"
+                 aria-multiselectable="true">
+                <div class="card">
+                    <div class="card-header w3-right-align w3-hover-khaki" role="tab" id="headingUnfiled"
+                         style="background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);">
+                        <a data-toggle="collapse" href="#collapseUnfiled"
+                           aria-expanded="true" aria-controls="collapseUnfiled" style="text-decoration: none;">
+                            <h3 class="mt-1 mb-0">
+                                <span class="dashboard_textColor">Courses</span>
+                                <i class="fas fa-angle-down rotate-icon"></i>
+                            </h3>
+                            <a href="{% url "aonebrains_courses:course_list" %}">Latest Courses</a>
+                        </a>
+                    </div>
+                    <div id="collapseUnfiled" class="collapse" role="tabpanel" aria-labelledby="headingUnfiled"
+                         data-parent="">
+                        <div class="card-body">
+                            <div data-toggle="lists"
+                                 data-lists-values='[ "js-lists-values-course", "js-lists-values-curator", "js-lists-values-grade", "js-lists-values-date" ]'
+                                 data-lists-sort-by="js-lists-values-date" data-lists-sort-desc="true"
+                                 class="table-responsive">
+
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                    <tr class="w3-light-grey w3-hover-red">
+                                        <th><a href="javascript:void(0)" class="sort"
+                                               data-sort="js-lists-values-course">COURSE</a></th>
+                                        <th><a href="javascript:void(0)" class="sort"
+                                               data-sort="js-lists-values-curator">CURATOR</a></th>
+                                        <th><a href="javascript:void(0)" class="sort"
+                                               data-sort="js-lists-values-grade">GRADE</a></th>
+                                        <th><a href="javascript:void(0)" class="sort"
+                                               data-sort="js-lists-values-date">DATE</a></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="list">
+                                    <tr class="w3-hover-green">
+                                        {% for course in courses|slice:"-5:" %}
+                                            <tr>
+                                                <td>
+                                                    <a href="{% url "aonebrains_courses:course_detail" course.slug %}"
+                                                       class="avatar avatar-4by3 avatar-sm mr-3 js-lists-values-course"
+                                                       style="">
+                                                        {% if course.preview %}
+                                                            <img src="{{ course.preview.url }}" alt="course"
+                                                                 class="avatar-img rounded">
+                                                        {% endif %}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <span class="js-lists-values-curator">{{ course.title }}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="js-lists-values-grade">
+                                                    Teacher:<a
+                                                            href="{% url "accounts:curator_detail" course.creator.slug %}"
+                                                            style="color: black; font-weight: bold; text-decoration-line: underline;">{{ course.creator.user.first_name }}</a>
+                                                    -
+                                                    class: <a class="js-lists-values-grade">{{ course.grade }}</a>
+                                                        </span>
+                                                </td>
+                                                <td><a class="js-lists-values-date">{{ course.created }}</td>
+                                                </a>
+                                            </tr>
+                                        {% endfor %}
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header w3-right-align w3-hover-khaki" role="tab" id="heading79"
+                         style="background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);">
+                        <a data-toggle="collapse" href="#collapse79" aria-expanded="true" aria-controls="collapse79"
+                           style="text-decoration: none;">
+                            <h3 class="mt-1 mb-0">
+                                <span class="dashboard_textColor">Editors</span>
+                                <i class="fas fa-angle-down rotate-icon"></i>
+                            </h3>
+                            <a href="{% url "accounts:editor_list" %}">New Editors</a>
+                        </a>
+                    </div>
+                    <div id="collapse79" class="collapse" role="tabpanel" aria-labelledby="heading79"
+                         data-parent="">
+                        <div class="card-body">
+                            <div class="table-ui p-2 mb-3 mx-3 mb-4"></div>
+
+                            <div data-toggle="lists"
+                                 data-lists-values='[ "js-lists-values-editor", "js-lists-values-admin", "js-lists-values-date" ]'
+                                 data-lists-sort-by="js-lists-values-date" data-lists-sort-desc="true"
+                                 class="table-responsive">
+
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                    <tr class="w3-light-grey w3-hover-red">
+                                        <th><a href="javascript:void(0)" class="sort"
+                                               data-sort="js-lists-values-editor">Editor</a></th>
+                                        <th><a href="javascript:void(0)" class="sort"
+                                               data-sort="js-lists-values-admin">Admin</a></th>
+                                        <th><a href="javascript:void(0)" class="sort"
+                                               data-sort="js-lists-values-date">Date</a></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="list">
+                                    <tr class="w3-hover-green">
+                                        {% for editor in editors|slice:"-5:" %}
+                                            <tr>
+                                                <td>
+                                                    <a href="{% url "accounts:editor_detail" editor.slug %}"
+                                                       class="avatar avatar-4by3 avatar-sm mr-3 js-lists-values-editor">
+                                                        {% if editor.user.avatar %}
+                                                            <img src="{{ editor.user.avatar.url }}"
+                                                                 alt="course" class="avatar-img rounded">
+                                                        {% endif %}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <strong><a href="{% url "accounts:editor_detail" editor.slug %}"
+                                                               style="color: black; font-weight: bold; text-decoration-line: underline;"><span
+                                                            class="js-lists-values-admin">{{ editor.user.first_name }}</span></a></strong><br>
+                                                    <span class="js-lists-values-teacher">admin: {{ editor.admin }}</span>
+                                                </td>
+                                                <td>
+                                                    <a class="js-lists-values-date">{{ editor.user.date_joined }}</a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header w3-right-align w3-hover-khaki" role="tab" id="heading80"
+                         style="background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);">
+                        <a data-toggle="collapse" data-parent="" href="#collapse80"
+                           aria-expanded="true" aria-controls="collapse80" style="text-decoration: none;">
+                            <h3 class="mt-1 mb-0">
+                                <span class="dashboard_textColor">Quizzes</span>
+                                <i class="fas fa-angle-down rotate-icon"></i>
+                            </h3>
+                            <a>New Quizzes</a>
+                        </a>
+                    </div>
+                    <div id="collapse80" class="collapse" role="tabpanel" aria-labelledby="heading80"
+                         data-parent="">
+                        <div class="card-body">
+                            <div class="table-ui p-2 mb-3 mx-3 mb-4"></div>
+
+                            <div data-toggle="lists"
+                                 data-lists-values='[ "js-lists-values-quiz", "js-lists-values-curator" ]'
+                                 data-lists-sort-by="js-lists-values-date" data-lists-sort-desc="true"
+                                 class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                    <tr class="w3-light-grey w3-hover-red">
+                                        <th><a href="javascript:void(0)" class="sort"
+                                               data-sort="js-lists-values-quiz">Quiz</a></th>
+                                        <th><a href="javascript:void(0)" class="sort"
+                                               data-sort="js-lists-values-document">Curator</a></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="list">
+                                    <tr class="w3-hover-green">
+                                        {% for quiz in quizzes|slice:"-5:" %}
+                                            <tr>
+                                                <td>
+                                                    <strong><a
+                                                            href="#"
+                                                            style="color: black; font-weight: bold; text-decoration-line: underline;"><span
+                                                            class="js-lists-values-quiz">{{ quiz.title }}</span></a></strong><br>
+                                                </td>
+                                                <td>
+                                                    Curator:{{ quiz.course.creator.user.first_name }}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header w3-right-align w3-hover-khaki card_background" role="tab" id="heading"
+                         style="background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);">
+                        <a data-toggle="collapse" data-parent="" href="#collapse81"
+                           aria-expanded="true" aria-controls="collapse81" style="text-decoration: none;">
+                            <h3 class="mt-1 mb-0">
+                                <span class="dashboard_textColor">Curators</span>
+                                <i class="fas fa-angle-down rotate-icon"></i>
+                            </h3>
+                            <a href="{% url "accounts:curator_list" %}">New Curators</a>
+                        </a>
+                    </div>
+                    <div id="collapse81" class="collapse" role="tabpanel" aria-labelledby="headingUnfiled"
+                         data-parent="">
+                        <div class="card-body">
+                            <div class="table-ui p-2 mb-3 mx-3 mb-4"></div>
+
+                            <div data-toggle="lists"
+                                 data-lists-values='["js-lists-values-curator", "js-lists-values-admin", "js-lists-values-date" ]'
+                                 data-lists-sort-by="js-lists-values-date" data-lists-sort-desc="true"
+                                 class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                    <tr class="w3-light-grey w3-hover-red">
+                                        <th><a href="javascript:void(0)" class="sort"
+                                               data-sort="js-lists-values-curator">Curator</a></th>
+                                        <th><a href="javascript:void(0)" class="sort"
+                                               data-sort="js-lists-values-admin">Admin</a></th>
+                                        <th><a href="javascript:void(0)" class="sort"
+                                               data-sort="js-lists-values-date">Date</a></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="list">
+                                    <tr class="w3-hover-green">
+                                        {% for curator in curators|slice:"-5:" %}
+                                            <tr>
+                                                <td>
+                                                    <a href="{% url "accounts:curator_detail" curator.slug %}"
+                                                       class="avatar avatar-4by3 avatar-sm mr-3 js-lists-values-curator">
+                                                        {% if curator.user.avatar %}
+                                                            <img src="{{ curator.user.avatar.url }}" alt="course"
+                                                                 class="avatar-img rounded">
+                                                        {% endif %}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <strong><a class="js-lists-values-admin"
+                                                               href="{% url "accounts:curator_detail" curator.slug %}"
+                                                               style="color: black; font-weight: bold; text-decoration-line: underline;">{{ curator.user.first_name }}</a></strong><br>
+                                                    Admin: <span class="js-lists-values-admin">{{ curator.admin }}</span>
+                                                </td>
+                                                <td>
+                                                    <a class="js-lists-values-date">{{ curator.user.date_joined }}</a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <style>
+        .example_d {
+            text-transform: uppercase;
+            border-radius: 12px;
+            display: inline-block;
+            transition: all 0.3s ease 0s;
+            margin-bottom: 10px;
+            margin-top: 30px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .example_d:hover {
+            color: #494949 !important;
+            border-radius: 50px;
+            border-color: #494949 !important;
+            transition: all 0.3s ease 0s;
+        }
+
+        .btn_courses {
+            background-color: #4089d0;
+        }
+
+        .btn_editors {
+            background-color: #f0ba11;
+        }
+
+        .btn_quizzes {
+            background-color: #06f26a;
+        }
+
+        .btn_curators {
+            background-color: #c43c2d;
+        }
+
+        .dashboard_textColor {
+            color: #83CB1E;
+        }
+
+        .btn_admins {
+            background-color: #544CD0;
+        }
+
+        .animation_effect {
+        {#background-color: #f1f2f6;#} padding-bottom: 20vh;
+            animation: slide-up 2s;
+        }
+
+        @keyframes slide-up {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+
+{% endblock %}
+

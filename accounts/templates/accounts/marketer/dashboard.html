@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block content %}
+
+    <div class="w3-col mdk-drawer-layout__content page animation_effect" style=" margin-right: 20px;">
+        <div class="w3-card"
+             style="background-image: linear-gradient(45deg, #2e89fe, #8900fe 50%, #00e8fe); border-radius: 10px; margin-bottom: 40px;">
+            <h1 class="h2 w3-center" style="color: #06f26a;">Marketer Dashboard</h1>
+            <!-- +++++++++++++++++++++++++++++ Dashboard Button Start ++++++++++++++++++++++++++++++++++++++++ -->
+            <div class="w3-container w3-center">
+                <div class="w3-btn example_d btn_admins w3-left" style="text-decoration-line: none; margin-right: 10px;"
+                     onclick="history.back()">
+                    <a><i class="fas fa-arrow-left"></i></a>
+                </div>
+
+                <div class="w3-btn example_d btn_admins w3-left" style="text-decoration-line: none;"
+                     onclick="history.forward()">
+                    <a><i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="w3-bar">
+                    <div id="headingUnfiled" class="w3-bar-item w3-btn example_d btn_quizzes" data-toggle="collapse"
+                         href="#collapseUnfiled" target="_blank" rel="nofollow noopener"
+                         style="margin-right: 40px; outline: none;">Schools
+                    </div>
+                </div>
+            </div>
+            <!-- +++++++++++++++++++++++++++++ Dashboard Button end ++++++++++++++++++++++++++++++++++++++++ -->
+
+        </div>
+        <!-- +++++++++++++++++++++++++++++++++++++ View lastest data +++++++++++++++++++++++++++++++++++++++ -->
+        <div class="container page__container">
+            <div class="w3-row accordion md-accordion accordion-blocks" id="accordionEx78" role="tablist"
+                 aria-multiselectable="true">
+                <div class="card">
+                    <div class="card-header w3-right-align w3-hover-khaki" role="tab" id="headingUnfiled"
+                         style="background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);">
+                        <a data-toggle="collapse" href="#collapseUnfiled"
+                           aria-expanded="true" aria-controls="collapseUnfiled" style="text-decoration: none;">
+                            <h3 class="mt-1 mb-0">
+                                <span class="dashboard_textColor">Schools</span>
+                                <i class="fas fa-angle-down rotate-icon"></i>
+                            </h3>
+                            <a href="{% url "accounts:marketer_school_list" %}">Latest Schools</a>
+                        </a>
+                    </div>
+                    {#                            <a href="fixed-instructor-statement.html" class="btn btn-sm btn-primary"><i#}
+                    {#                                    class="material-icons">receipt</i></a>#}
+                    <div id="collapseUnfiled" class="collapse" role="tabpanel" aria-labelledby="headingUnfiled">
+                        <div class="card-body">
+                            <div data-toggle="lists"
+                                 data-lists-values='[ "js-lists-values-course", "js-lists-values-email", "js-lists-values-school", "js-lists-values-date" ]'
+                                 data-lists-sort-by="js-lists-values-date" data-lists-sort-desc="true"
+                                 class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                    <tr class="w3-light-grey w3-hover-red">
+                                        <th><a href="javascript:void(0)" class="sort"
+                                               data-sort="js-lists-values-course" style="font-weight: bold;">Avata</a></th>
+                                        <th><a href="javascript:void(0)" class="sort"
+                                               data-sort="js-lists-values-school" style="font-weight: bold;">SchoolName</a></th>
+                                        <th><a href="javascript:void(0)" class="sort"
+                                               data-sort="js-lists-values-email" style="font-weight: bold;">Email</a></th>
+                                        <th><a href="javascript:void(0)" class="sort"
+                                               data-sort="js-lists-values-date" style="font-weight: bold;">Date</a></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="list">
+                                    {% for school in schools|slice:"-5:" %}
+                                        <tr class="w3-hover-green">
+                                            <td>
+                                                <a class="avatar avatar-4by3 avatar-sm mr-3 js-lists-values-course" href="{% url "schools:school_detail" school.slug %}">
+                                                    {% if school.user.avatar %}
+                                                        <img src="{{ school.user.avatar.url }}" alt="course"
+                                                             class="avatar-img rounded">
+                                                    {% endif %}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <strong><span
+                                                        class="js-lists-values-school">{{ school.name }}</span></strong>
+                                            </td>
+                                            <td>
+                                                <a class="js-lists-values-email">{{ school.user.email }}</a>
+                                            </td>
+                                            <td>
+                                                <a class="js-lists-values-date">{{ school.user.date_joined }}</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .example_d {
+            text-transform: uppercase;
+            border-radius: 12px;
+            display: inline-block;
+            transition: all 0.3s ease 0s;
+            margin-bottom: 10px;
+            margin-top: 30px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .example_d:hover {
+            color: #494949 !important;
+            border-radius: 50px;
+            border-color: #494949 !important;
+            transition: all 0.3s ease 0s;
+        }
+
+        .btn_quizzes {
+            background-color: #06f26a;
+        }
+
+        .dashboard_textColor {
+            color: #83CB1E;
+        }
+
+        .btn_admins {
+            background-color: #544CD0;
+        }
+
+        .btn_quizzes {
+            background-color: #06f26a;
+        }
+
+        .dashboard_textColor {
+            color: #83CB1E;
+        }
+
+        .animation_effect {
+        {#background-color: #f1f2f6;#} padding-bottom: 20vh;
+            animation: slide-up 2s;
+        }
+
+        @keyframes slide-up {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+
+{% endblock %}
+

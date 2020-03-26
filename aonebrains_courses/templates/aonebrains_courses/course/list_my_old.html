@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% extends "accounts/curators/list.html" %}
+{% load static %}
+
+{% block title %}
+    {% if subject %}
+        {{ subject.title }} courses
+    {% else %}
+        All courses
+    {% endif %}
+{% endblock %}
+
+<link type="text/css" href="{% static "css/tables/login.css" %}" rel="stylesheet">
+<link type="text/css" href="{% static "css/tables/w3-css.css" %}" rel="stylesheet">
+{% block content %}
+    <div class="mdk-drawer-layout__content page ">
+        <div class="container-fluid page__container">
+            <div>
+                <h1 class="h2" style="text-align: center;">Courses</h1>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive border-bottom" data-toggle="lists"
+                                 data-lists-values='["js-lists-values-employee-name"]'>
+                                <div class="search-form search-form--light mb-3 w3-hover-grey">
+                                    <input type="text" class="form-control search w3-hover-light-gray"
+                                           placeholder="Search">
+                                    <button class="btn" type="button" role="button"><i class="material-icons">search</i>
+                                    </button>
+                                </div>
+                                <!--Accordion wrapper-->
+                                <div class="accordion md-accordion accordion-4" id="accordionEx2" role="tablist"
+                                     aria-multiselectable="true">
+
+                                    {% for course in courses %}
+                                        <div class="card">
+                                            <!-- Card header -->
+                                            <div class="card-header z-depth-1 teal lighten-3 w3-hover-deep-orange"
+                                                 role="tab" style="background-color: #B3ECFF">
+                                                <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx2"
+                                                   href="#collapse11" aria-expanded="false" style="text-decoration: none;">
+                                                    <h4 class="mb-0 black-text text-center font-weight-bold text-uppercase"
+                                                        style="color: #83CB1E">
+                                                        {{ course.title }}
+                                                    </h4>
+                                                </a>
+                                            </div>
+                                            <!-- Card body -->
+                                            <div id="collapse11" class="collapse" role="tabpanel"
+                                                 data-parent="#accordionEx2">
+                                                <div class="card-body rgba-teal-strong white-text">
+                                                    <table class="table mb-0" style="width: 100%">
+                                                        <thead>
+                                                        <tr>
+                                                            <th style="width: 16%;">Course</th>
+                                                            <th style="width: 16%;">Super Admin</th>
+                                                            <th style="width: 14%;">Subject</th>
+                                                            <th style="width: 14%;">Class</th>
+                                                            <th style="width: 14%;">Teacher</th>
+                                                            <th style="width: 6%;">Draft</th>
+                                                            <th style="width: 6%;">Approved</th>
+                                                            <th style="width: 14%;">Options</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody class="list" id="search">
+                                                        <tr>
+                                                            <td>
+                                                                <a data-toggle="tooltip" title="Course Detail"
+                                                                   href="{% url "aonebrains_courses:course_detail" course.slug %}">
+                                                                    <span class="js-lists-values-employee-name">{{ course.title }}</span></a>
+                                                            </td>
+                                                            <td>
+                                                                <small class="text-muted">{{ course.creator.admin }}</small>
+                                                            </td>
+                                                            <td>
+                                                                <small class="text-muted">{{ course.subject }}</small>
+                                                            </td>
+                                                            <td>
+                                                                <small class="text-muted"> {{ course.grade }}</small>
+                                                            </td>
+                                                            <td>
+                                                                <small class="text-muted">{{ course.creator.user.get_full_name }}</small>
+                                                            </td>
+                                                            <td>
+                                                                <small class="text-muted">{{ course.draft }}</small>
+                                                            </td>
+                                                            <td>
+                                                                <small class="text-muted">{{ course.approved }}</small>
+                                                            </td>
+                                                            <td>
+                                                                {#                                                {% if request.user.account_type != "admin" %}#}
+                                                                <a data-toggle="tooltip" title="Delete Course"
+                                                                   href="{% url "aonebrains_courses:curator_course_delete" course.slug %}"><i
+                                                                        class="fa fa-trash"></i></a>
+                                                                <a data-toggle="tooltip" title="List Modules"
+                                                                   href="{% url "aonebrains_courses:curator_course_module_list" course.slug %}">
+                                                                    <img src="{% static "icons/Modules.svg" %}"
+                                                                         style="width: 20px; margin-left: 6px"></a>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <!--/.Accordion wrapper-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+</title>
+</head>
+<body>
+
+</body>
+</html>

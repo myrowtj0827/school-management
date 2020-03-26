@@ -1,0 +1,1019 @@
+{% extends "base.html" %}
+{% load widget_tweaks static %}
+
+{% block title %}
+    Marketers
+{% endblock %}
+
+{% block content %}
+
+    <link type="text/css" href="{% static "css/tables/w3-css.css" %}" rel="stylesheet">
+    <link type="text/css" href="{% static "css/tables/table.css" %}" rel="stylesheet">
+    <link type="text/css" href="{% static "css/tables/super_admin_style.css" %}" rel="stylesheet">
+
+    <div class="mdk-drawer-layout__content page">
+        <div>
+            <h1 class="h2 w3-center">Marketers</h1>
+            <div class="w3-container">
+                <div class="container-fluid page__container">
+                    <div class="row">
+                        <div class="w3-col l9">
+                            <div class="table-responsive" data-toggle="lists"
+                                 data-lists-values='["js-lists-values-employee-name"]'>
+                                <div class="search-form search-form--light mb-3">
+                                    <input type="text" class="form-control search w3-hover-light-gray" placeholder="Search">
+                                    <button class="w3-btn" type="button" role="button"><i
+                                            class="material-icons">search</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w3-col l3">
+                            {% if request.user.account_type == "super admin" %}
+                                <button class="w3-btn example_d btn_courses" data-toggle="modal"
+                                        data-target="#exampleModalCenter" style="margin-left: 10%; margin-top: 4px; text-decoration:none; ">
+                                    Add Marketer
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w3-row-padding w3-margin-top w3-center">
+
+                <div class="w3-quarter">
+                    <div class="cards">
+                        <div class="card card--1" style="width: 80%;">
+                            <div class="card__info-hover">
+                                <div class="card__clock-info">
+                                </div>
+                            </div>
+                            <div class="card__img"></div>
+                            <a href="#" class="card_link">
+                                <div class="card__img--hover"></div>
+                            </a>
+                            <div class="card__info">
+                                <div class="w3-row">
+                                    {% for marketer in marketers %}
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style" style="color: rgba(64,182,47,0.95)">Marketer:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a href="{% url "accounts:marketer_detail" marketer.slug %}">
+                                                    <span data-toggle="tooltip" title="Marketer Detail"
+                                                          class="js-lists-values-employee-name"
+                                                          style="color: rgba(64,182,47,0.95)">{{ marketer.user.get_full_name }}</span></a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Username:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.username }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Phone:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.phone }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Email:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.email }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Joined:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.date_joined }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Last Login:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.last_login }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Activity:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.is_active }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Options:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a href="{% url 'accounts:marketer_schools' marketer.slug %}"><img
+                                                        style="width: 20px" data-toggle="tooltip"
+                                                        title="Schools list"
+                                                        src="{% static "icons/Student_icon.svg" %}"></a>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w3-quarter">
+                    <div class="cards">
+                        <div class="card card--1" style="width: 80%;">
+                            <div class="card__info-hover">
+                                <div class="card__clock-info">
+                                </div>
+                            </div>
+                            <div class="card__img"></div>
+                            <a href="#" class="card_link">
+                                <div class="card__img--hover"></div>
+                            </a>
+                            <div class="card__info">
+                                <div class="w3-row">
+                                    {% for marketer in marketers %}
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style" style="color: rgba(64,182,47,0.95)">Marketer:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a href="{% url "accounts:marketer_detail" marketer.slug %}">
+                                                    <span data-toggle="tooltip" title="Marketer Detail"
+                                                          class="js-lists-values-employee-name"
+                                                          style="color: rgba(64,182,47,0.95)">{{ marketer.user.get_full_name }}</span></a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Username:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.username }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Phone:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.phone }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Email:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.email }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Joined:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.date_joined }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Last Login:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.last_login }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Activity:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.is_active }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Options:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a href="{% url 'accounts:marketer_schools' marketer.slug %}"><img
+                                                        style="width: 20px" data-toggle="tooltip"
+                                                        title="Schools list"
+                                                        src="{% static "icons/Student_icon.svg" %}"></a>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w3-quarter">
+                    <div class="cards">
+                        <div class="card card--1" style="width: 80%;">
+                            <div class="card__info-hover">
+                                <div class="card__clock-info">
+                                </div>
+                            </div>
+                            <div class="card__img"></div>
+                            <a href="#" class="card_link">
+                                <div class="card__img--hover"></div>
+                            </a>
+                            <div class="card__info">
+                                <div class="w3-row">
+                                    {% for marketer in marketers %}
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style" style="color: rgba(64,182,47,0.95)">Marketer:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a href="{% url "accounts:marketer_detail" marketer.slug %}">
+                                                    <span data-toggle="tooltip" title="Marketer Detail"
+                                                          class="js-lists-values-employee-name"
+                                                          style="color: rgba(64,182,47,0.95)">{{ marketer.user.get_full_name }}</span></a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Username:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.username }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Phone:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.phone }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Email:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.email }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Joined:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.date_joined }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Last Login:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.last_login }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Activity:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.is_active }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Options:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a href="{% url 'accounts:marketer_schools' marketer.slug %}"><img
+                                                        style="width: 20px" data-toggle="tooltip"
+                                                        title="Schools list"
+                                                        src="{% static "icons/Student_icon.svg" %}"></a>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w3-quarter">
+                    <div class="cards">
+                        <div class="card card--1" style="width: 80%;">
+                            <div class="card__info-hover">
+                                <div class="card__clock-info">
+                                </div>
+                            </div>
+                            <div class="card__img"></div>
+                            <a href="#" class="card_link">
+                                <div class="card__img--hover"></div>
+                            </a>
+                            <div class="card__info">
+                                <div class="w3-row">
+                                    {% for marketer in marketers %}
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style" style="color: rgba(64,182,47,0.95)">Marketer:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a href="{% url "accounts:marketer_detail" marketer.slug %}">
+                                                    <span data-toggle="tooltip" title="Marketer Detail"
+                                                          class="js-lists-values-employee-name"
+                                                          style="color: rgba(64,182,47,0.95)">{{ marketer.user.get_full_name }}</span></a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Username:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.username }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Phone:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.phone }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Email:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.email }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Joined:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.date_joined }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Last Login:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.last_login }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Activity:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.is_active }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Options:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a href="{% url 'accounts:marketer_schools' marketer.slug %}"><img
+                                                        style="width: 20px" data-toggle="tooltip"
+                                                        title="Schools list"
+                                                        src="{% static "icons/Student_icon.svg" %}"></a>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w3-quarter">
+                    <div class="cards">
+                        <div class="card card--1" style="width: 80%;">
+                            <div class="card__info-hover">
+                                <div class="card__clock-info">
+                                </div>
+                            </div>
+                            <div class="card__img"></div>
+                            <a href="#" class="card_link">
+                                <div class="card__img--hover"></div>
+                            </a>
+                            <div class="card__info">
+                                <div class="w3-row">
+                                    {% for marketer in marketers %}
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style" style="color: rgba(64,182,47,0.95)">Marketer:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a href="{% url "accounts:marketer_detail" marketer.slug %}">
+                                                    <span data-toggle="tooltip" title="Marketer Detail"
+                                                          class="js-lists-values-employee-name"
+                                                          style="color: rgba(64,182,47,0.95)">{{ marketer.user.get_full_name }}</span></a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Username:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.username }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Phone:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.phone }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Email:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.email }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Joined:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.date_joined }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Last Login:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.last_login }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Activity:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.is_active }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Options:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a href="{% url 'accounts:marketer_schools' marketer.slug %}"><img
+                                                        style="width: 20px" data-toggle="tooltip"
+                                                        title="Schools list"
+                                                        src="{% static "icons/Student_icon.svg" %}"></a>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w3-quarter">
+                    <div class="cards">
+                        <div class="card card--1" style="width: 80%;">
+                            <div class="card__info-hover">
+                                <div class="card__clock-info">
+                                </div>
+                            </div>
+                            <div class="card__img"></div>
+                            <a href="#" class="card_link">
+                                <div class="card__img--hover"></div>
+                            </a>
+                            <div class="card__info">
+                                <div class="w3-row">
+                                    {% for marketer in marketers %}
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style" style="color: rgba(64,182,47,0.95)">Marketer:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a href="{% url "accounts:marketer_detail" marketer.slug %}">
+                                                    <span data-toggle="tooltip" title="Marketer Detail"
+                                                          class="js-lists-values-employee-name"
+                                                          style="color: rgba(64,182,47,0.95)">{{ marketer.user.get_full_name }}</span></a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Username:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.username }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Phone:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.phone }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Email:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.email }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Joined:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.date_joined }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Last Login:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.last_login }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Activity:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.is_active }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Options:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a href="{% url 'accounts:marketer_schools' marketer.slug %}"><img
+                                                        style="width: 20px" data-toggle="tooltip"
+                                                        title="Schools list"
+                                                        src="{% static "icons/Student_icon.svg" %}"></a>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w3-quarter">
+                    <div class="cards">
+                        <div class="card card--1" style="width: 80%;">
+                            <div class="card__info-hover">
+                                <div class="card__clock-info">
+                                </div>
+                            </div>
+                            <div class="card__img"></div>
+                            <a href="#" class="card_link">
+                                <div class="card__img--hover"></div>
+                            </a>
+                            <div class="card__info">
+                                <div class="w3-row">
+                                    {% for marketer in marketers %}
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style" style="color: rgba(64,182,47,0.95)">Marketer:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a href="{% url "accounts:marketer_detail" marketer.slug %}">
+                                                    <span data-toggle="tooltip" title="Marketer Detail"
+                                                          class="js-lists-values-employee-name"
+                                                          style="color: rgba(64,182,47,0.95)">{{ marketer.user.get_full_name }}</span></a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Username:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.username }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Phone:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.phone }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Email:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.email }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Joined:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.date_joined }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Last Login:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.last_login }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Activity:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.is_active }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Options:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a href="{% url 'accounts:marketer_schools' marketer.slug %}"><img
+                                                        style="width: 20px" data-toggle="tooltip"
+                                                        title="Schools list"
+                                                        src="{% static "icons/Student_icon.svg" %}"></a>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w3-quarter">
+                    <div class="cards">
+                        <div class="card card--1" style="width: 80%;">
+                            <div class="card__info-hover">
+                                <div class="card__clock-info">
+                                </div>
+                            </div>
+                            <div class="card__img"></div>
+                            <a href="#" class="card_link">
+                                <div class="card__img--hover"></div>
+                            </a>
+                            <div class="card__info">
+                                <div class="w3-row">
+                                    {% for marketer in marketers %}
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style" style="color: rgba(64,182,47,0.95)">Marketer:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a href="{% url "accounts:marketer_detail" marketer.slug %}">
+                                                    <span data-toggle="tooltip" title="Marketer Detail"
+                                                          class="js-lists-values-employee-name"
+                                                          style="color: rgba(64,182,47,0.95)">{{ marketer.user.get_full_name }}</span></a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Username:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.username }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Phone:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.phone }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Email:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.email }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Joined:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.date_joined }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Last Login:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.last_login }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Activity:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.is_active }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Options:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a href="{% url 'accounts:marketer_schools' marketer.slug %}"><img
+                                                        style="width: 20px" data-toggle="tooltip"
+                                                        title="Schools list"
+                                                        src="{% static "icons/Student_icon.svg" %}"></a>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w3-quarter">
+                    <div class="cards">
+                        <div class="card card--1" style="width: 80%;">
+                            <div class="card__info-hover">
+                                <div class="card__clock-info">
+                                </div>
+                            </div>
+                            <div class="card__img"></div>
+                            <a href="#" class="card_link">
+                                <div class="card__img--hover"></div>
+                            </a>
+                            <div class="card__info">
+                                <div class="w3-row">
+                                    {% for marketer in marketers %}
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style" style="color: rgba(64,182,47,0.95)">Marketer:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a href="{% url "accounts:marketer_detail" marketer.slug %}">
+                                                    <span data-toggle="tooltip" title="Marketer Detail"
+                                                          class="js-lists-values-employee-name"
+                                                          style="color: rgba(64,182,47,0.95)">{{ marketer.user.get_full_name }}</span></a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Username:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.username }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Phone:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.phone }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Email:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.email }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Joined:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.date_joined }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Last Login:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.last_login }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Activity:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.is_active }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Options:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a href="{% url 'accounts:marketer_schools' marketer.slug %}"><img
+                                                        style="width: 20px" data-toggle="tooltip"
+                                                        title="Schools list"
+                                                        src="{% static "icons/Student_icon.svg" %}"></a>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w3-quarter">
+                    <div class="cards">
+                        <div class="card card--1" style="width: 80%;">
+                            <div class="card__info-hover">
+                                <div class="card__clock-info">
+                                </div>
+                            </div>
+                            <div class="card__img"></div>
+                            <a href="#" class="card_link">
+                                <div class="card__img--hover"></div>
+                            </a>
+                            <div class="card__info">
+                                <div class="w3-row">
+                                    {% for marketer in marketers %}
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style" style="color: rgba(64,182,47,0.95)">Marketer:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a href="{% url "accounts:marketer_detail" marketer.slug %}">
+                                                    <span data-toggle="tooltip" title="Marketer Detail"
+                                                          class="js-lists-values-employee-name"
+                                                          style="color: rgba(64,182,47,0.95)">{{ marketer.user.get_full_name }}</span></a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Username:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.username }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Phone:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.phone }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Email:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.email }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Joined:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.date_joined }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Last Login:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.last_login }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Activity:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a class="txt_style">{{ marketer.user.is_active }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <a class="txt_style">Options:</a>
+                                            </div>
+                                            <div class="w3-half">
+                                                <a href="{% url 'accounts:marketer_schools' marketer.slug %}"><img
+                                                        style="width: 20px" data-toggle="tooltip"
+                                                        title="Schools list"
+                                                        src="{% static "icons/Student_icon.svg" %}"></a>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <style>
+        [dir=ltr] .modal-backdrop {
+            position: unset !important;
+        }
+
+
+    </style>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% if form.non_field_errors %}
+                    <ul class='form-errors'>
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <div class="modal-body">
+                    <form action="." novalidate method="post">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="form-group">
+                                <label class="form-label" for="username">{{ field.label }}:</label>
+                                <div class="input-group input-group-merge">
+                                    {{ field|add_class:"form-control form-control-prepended" }}
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            {#                                            <span class="far fa-envelope"></span>#}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {##}
+    {#    <form action="." method="post">#}
+    {#    {{ form.as_p }}#}
+    {#    {% csrf_token %}#}
+    {#    <input type="submit" value="Submit">#}
+    {#    </form>#}
+
+{% endblock %}
+
+
+

@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+{% block content %}
+
+    <div class="mdk-drawer-layout__content page">
+        <div class="container page__container">
+            <div class="w3-card-4"
+                 style="background-image: linear-gradient(45deg, #2e89fe, #8900fe 50%, #00e8fe); border-radius: 10px;">
+                <h1 class="h2 w3-center" style="color: #06f26a; font-weight: bold;">Marketer Dashboard</h1>
+            </div>
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center">
+                            <div class="flex">
+                                <h4 class="card-title"><a href="{% url "accounts:marketer_school_list" %}">Schools</a>
+                                </h4>
+                                <p class="card-subtitle">Latest Courses</p>
+                            </div>
+                            {#                            <a href="fixed-instructor-statement.html" class="btn btn-sm btn-primary"><i#}
+                            {#                                    class="material-icons">receipt</i></a>#}
+                        </div>
+                        <div data-toggle="lists" data-lists-values='[
+            "js-lists-values-name",
+{#            "js-lists-values-grade",#}
+            "js-lists-values-date"
+          ]' data-lists-sort-by="js-lists-values-date" data-lists-sort-desc="true" class="table-responsive">
+                            <table class="table table-nowrap m-0">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th colspan="2">
+                                        <a href="javascript:void(0)" class="sort"
+                                           data-sort="js-lists-values-name">Name</a>
+                                        {#                                        <a href="javascript:void(0)" class="sort"#}
+                                        {#                                           data-sort="js-lists-values-grade">Grade</a>#}
+                                        <a href="javascript:void(0)" class="sort"
+                                           data-sort="js-lists-values-date">Date</a>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody class="list">
+
+                                {% for school in schools|slice:"-5:" %}
+                                    <tr>
+                                        <td>
+                                            <div class="media align-items-center">
+                                                class="avatar avatar-4by3 avatar-sm mr-3">
+                                                {% if school.user.avatar %}
+                                                    <img src="{{ school.user.avatar.url }}" alt="course"
+                                                         class="avatar-img rounded">
+                                                {% endif %}
+                                                <div class="media-body">
+                                                    <strong><span
+                                                            class="js-lists-values-course">{{ school.name }}</span></strong><br>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-right">
+                                            <small class="text-muted text-uppercase js-lists-values-date">{{ school.date_joined }}
+                                            </small>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .animation_effect {
+        {#background-color: #f1f2f6;#} padding-bottom: 20vh;
+            animation: slide-up 2s;
+        }
+
+        @keyframes slide-up {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+
+{% endblock %}

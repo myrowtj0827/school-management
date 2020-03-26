@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}
+    {% if quiz %}
+        Edit Quiz "{{ quiz.title }}"
+    {% else %}
+        Create a new Quiz
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+    <!-- Initialize Quill editor -->
+    <link type="text/css" href="{% static "quill-1.3.6/css/quill.snow.css" %}" rel="stylesheet">
+    <link type="text/css" href="{% static "quill-1.3.6/css/katex.min.css" %}" rel="stylesheet">
+    <link type="text/css" href="{% static "quill-1.3.6/css/monokai-sublime.min.css" %}" rel="stylesheet">
+
+    {% if form.non_field_errors %}
+        <ul class='form-errors'>
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div class="mdk-drawer-layout__content page">
+        <div class="container-fluid page__container">
+
+            <div class="w3-card-4"
+                 style="background-image: linear-gradient(45deg, #2e89fe, #8900fe 50%, #00e8fe); border-radius: 15px;">
+                <h1 class="h2 w3-center" style="color: #06f26a;">
+                    {% if mcq %}
+                        Edit Quiz "{{ quiz.title }}"
+                    {% else %}
+                        Create New Quiz
+                    {% endif %}
+                </h1>
+            </div>
+
+            <div class="card-4"
+                 style="background-image: linear-gradient(to top, #9890e3 0%, #b1f4cf 100%); border-radius: 15px;">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form action="." method="post">
+                                {% for field in form %}
+                                    <div class="form-group">
+                                        <label class="form-label" for="email"
+                                               style="color: black; font-size: 16px;">{{ field.label }}</label>
+                                        {% if field.name == 'draft' %}
+                                            {{ field }}
+                                        {% else %}
+                                            {% if field.name == 'description' or field.name == 'success_text' or field.name == 'fail_text' %}
+                                                <a style="color: black; font-weight: bold; font-size: 12px;"> {{ field|add_class:"form-control quilljs-textarea" }}</a>
+                                            {% else %}
+                                                <a style="color: black; font-weight: bold; font-size: 12px;"> {{ field|add_class:"form-control form-control-prepended" }}</a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                    {#                                        <div class="input-group input-group-merge">#}
+                                    <div class="row">
+                                        {% if field.help_text %}
+                                            <a style="color: black; font-size: 12px; margin-left: 14px; margin-top: -11px; margin-bottom: 10px;">
+                                                {{ field.help_text }}</a>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                                {% csrf_token %}
+
+                                <input class="w3-btn example_d btn_editors w3-left" type="submit" value="Save course" style="outline: none;">
+                                <div class="w3-btn example_d btn_admins w3-right" style="text-decoration-line: none;"
+                                     onclick="history.forward()">
+                                    <a>GoForward <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                                <div class="w3-btn example_d btn_admins w3-right" style="text-decoration-line: none;"
+                                     onclick="history.back()">
+                                    <a><i class="fas fa-arrow-left"></i> Back</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static "js/quill.js" %}"></script>
+    <script src="{% static "js/quill.min.js" %}"></script>
+    <script src="{% static "quilljs-textarea/quill-textarea.js" %}"></script>
+    <script src="{% static "js/katex.min.js" %}"></script>
+    <script src="{% static "js/highlight.min.js" %}"></script>
+
+    <script>
+        (function () {
+            quilljs_textarea('.quilljs-textarea', {
+                modules: {
+                    toolbar: [
+
+                        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+                        ['blockquote', 'code-block'],
+
+                        [{'header': 1}, {'header': 2}],               // custom button values
+                        [{'list': 'ordered'}, {'list': 'bullet'}],
+                        [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
+                        [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
+                        [{'direction': 'rtl'}],                         // text direction
+
+                        [{'size': ['small', false, 'large', 'huge']}],  // custom dropdown
+                        [{'header': [1, 2, 3, 4, 5, 6, false]}],
+
+                        [{'color': []}, {'background': []}],          // dropdown with defaults from theme
+                        [{'font': []}],
+                        [{'align': []}],
+
+                        ['clean'],                                       // remove formatting button
+                        ['formula',]
+                    ]
+                },
+                theme: 'snow',
+            });
+        })();
+    </script>
+
+    <style>
+        .example_d {
+            text-transform: uppercase;
+            border-radius: 12px;
+            display: inline-block;
+            transition: all 0.3s ease 0s;
+            margin-right: 20px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .example_d:hover {
+            color: green !important;
+            border-radius: 20px;
+            border-color: #494949 !important;
+            transition: all 0.3s ease 0s;
+        }
+
+        .btn_editors {
+            background-color: #f0ba11;
+        }
+
+        .btn_admins {
+            background-color: #544CD0;
+        }
+
+        .animation_effect {
+        {#background-color: #f1f2f6;#} padding-bottom: 20vh;
+            animation: slide-up 2s;
+        }
+
+        @keyframes slide-up {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+{% endblock %}

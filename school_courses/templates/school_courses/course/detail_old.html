@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ object.title }}
+{% endblock %}
+
+{% block content %}
+    {% with subject=schoolcourse.subject %}
+        <div class="w3-card-4"
+             style="background-image: linear-gradient(45deg, #2e89fe, #8900fe 50%, #00e8fe); border-radius: 15px;">
+            <h1 class="h2 w3-center" style="color: #06f26a;"> {{ object.title }}</h1>
+        </div>
+
+        <div class="module">
+            <h2>Overview</h2>
+            <p>
+                <a href="{% url "schools:courses:course_list_subject" subject.slug %}">
+                    {{ subject.title }}</a>
+                {{ course.modules.count }} modules.
+                Instructor: {{ course.creator.user.get_full_name }}
+            </p>
+            {{ object.overview|linebreaks }}
+            {% if request.user.is_authenticated %}
+                <form action="{% url "schools:students:student_enroll_course" %}" method="post">
+                    {{ enroll_form }}
+                    {% csrf_token %}
+                    <input type="submit" class="button" value="Enroll now">
+                </form>
+            {% else %}
+                <a href="{% url "schools:students:signup" %}" class="button">
+                    Register to enroll
+                </a>
+            {% endif %}
+        </div>
+    {% endwith %}
+{% endblock %}

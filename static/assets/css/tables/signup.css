@@ -1,0 +1,114 @@
+/*{% load static %}*/
+body {
+    /*background: url('http://cdn.wallpapersafari.com/13/6/Mpsg2b.jpg');*/
+    margin: 0px;
+    font-family: 'Ubuntu', sans-serif;
+    background-size: 100% 110%;
+}
+
+.card-body label {
+    margin-left: 11%;
+}
+
+.login {
+    margin: 0 auto;
+    max-width: 500px;
+}
+
+.login-header {
+    color: #fff;
+    text-align: center;
+    font-size: 300%;
+}
+
+.login-form {
+    border: 1px solid #FF0000;
+    background: #bbff4f21;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px #000;
+}
+
+.login-form h3 {
+    text-align: left;
+    margin-left: 40px;
+    color: #fff;
+}
+
+.login-form {
+    box-sizing: border-box;
+    padding-top: 15px;
+    padding-bottom: 10%;
+    margin: 5% auto;
+}
+
+.login input[type="text"],
+.login input[type="password"],
+.login input[type="email"] {
+    max-width: 400px;
+    width: 80%;
+    line-height: 3em;
+    font-family: 'Ubuntu', sans-serif;
+    margin: 0 1em 0 3em;
+    border-radius: 20px;
+    border: 2px solid #f2f2f2;
+    padding-left: 10px;
+}
+
+.login-form input[type="button"] {
+    height: 30px;
+    width: 100px;
+    background: #fff;
+    border: 1px solid #f2f2f2;
+    border-radius: 20px;
+    color: slategrey;
+    text-transform: uppercase;
+    font-family: 'Ubuntu', sans-serif;
+    cursor: pointer;
+}
+
+@media only screen and (min-width: 150px) and (max-width: 530px) {
+    .login-form h3 {
+        text-align: center;
+        margin: 0;
+    }
+
+    .login-button {
+        margin-bottom: 10px;
+    }
+}
+
+.example_d {
+    text-transform: uppercase;
+    padding: 8px;
+    border-radius: 12px;
+    display: inline-block;
+    transition: all 0.3s ease 0s;
+    width: 30%;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.example_d:hover {
+    color: #494949 !important;
+    border-radius: 50px;
+    border-color: #494949 !important;
+    transition: all 0.3s ease 0s;
+}
+
+.btn_courses {
+    background-color: #4089d0;
+}
+
+.btn_editors {
+    background-color: #f0ba11;
+}
+
+.btn_quizzes {
+    background-color: #06f26a;
+}
+
+.btn_curators {
+    background-color: #c43c2d;
+}

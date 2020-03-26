@@ -1,0 +1,166 @@
+<!-- schools/templates/schools/registration/profile_form.html -->
+
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}
+    {{ request.user.first_name }} profile
+{% endblock %}
+
+{% block content %}
+    <div class="mdk-drawer-layout__content page">
+        <div class="container-fluid page__container">
+            <div class="w3-card-4"
+                 style="background-image: linear-gradient(45deg, #2e89fe, #8900fe 50%, #00e8fe); border-radius: 15px;">
+                <h1 class="h2 w3-center" style="color: #06f26a;">Basic Information</h1>
+            </div>
+
+            {% if form.non_field_errors %}
+                <ul class='form-errors'>
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <div class="w3-card-4"
+                 style="background-image: linear-gradient(to top, #9890e3 0%, #b1f4cf 100%); border-radius: 15px;">
+
+                <div class="card-body" style="margin: 30px;">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form action="." method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="list-group list-group-fit">
+                                    {% if profile_form %}
+                                        {% for profile_field in profile_form %}
+                                            <div class="list-group-item"
+                                                 style="background-image: linear-gradient(to top, #a0ff00 2%, #b1f4cf 2%);">
+                                                <div class="form-group m-0" role="group"
+                                                     aria-labelledby="label-firstname">
+                                                    <div class="form-row">
+                                                        <label id="label-firstname" for="firstname"
+                                                               class="col-md-3 col-form-label form-label" style="color: green; font-weight: bold; font-size: 14px;">School
+                                                            Name:</label>
+                                                        <div class="col-md-9">
+                                                            {{ profile_field|add_class:"form-control" }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% for field in form %}
+                                        <div class="list-group-item"
+                                             style="background-image: linear-gradient(to top, #a0ff00 2%, #b1f4cf 2%);">
+                                            <div class="form-group m-0" role="group"
+                                                 aria-labelledby="label-firstname">
+                                                <div class="form-row">
+                                                    <label id="label-firstname" for="username"
+                                                           class="col-md-3 col-form-label form-label" style="color: green; font-weight: bold; font-size: 14px;">{{ field.label }}</label>
+                                                    <div class="col-md-9">
+                                                        {% if field.name == 'avatar' %}
+                                                            {% if form.instance.avatar %}
+                                                                <img style="height: 10em; width: 18em;"
+                                                                     src="{{ form.instance.avatar.url }}"
+                                                                     alt="Preview"
+                                                                     class="rounded">
+                                                                <input type="file" name="avatar"
+                                                                       accept="image/*" id="id_avatar">
+                                                            {% endif %}
+                                                        {% else %}
+                                                            {% if request.user.account_type == 'school' and field.name == 'first_name' and field.name != 'last_name' %}
+
+
+                                                            {% else %}
+                                                                {{ field|add_class:"form-control" }}
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="w3-row">
+                                    <button type="submit" class="w3-left w3-btn example_d btn_editors" style="margin: 20px; outline: none; border-radius: 10px;">
+                                        Save Changes
+                                    </button>
+
+                                    {#                                    <div class="w3-right w3-btn example_d btn_admins"#}
+                                    {#                                         style="text-decoration-line: none;"#}
+                                    {#                                         onclick="history.forward()">#}
+                                    {#                                        <a>GoForward <i class="fas fa-arrow-right"></i></a>#}
+                                    {#                                    </div>#}
+                                    <div class="w3-btn example_d btn_admins w3-right" onclick="history.forward()">
+                                        <a>GoForward <i class="fas fa-arrow-right"></i></a>
+                                    </div>
+
+                                    <div class="w3-right w3-btn example_d btn_admins"
+                                         style="text-decoration-line: none;"
+                                         onclick="history.back()">
+                                        <a><i class="fas fa-arrow-left"></i> Back</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .example_d {
+            text-transform: uppercase;
+            border-radius: 12px;
+            display: inline-block;
+            transition: all 0.3s ease 0s;
+            margin: 20px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .example_d:hover {
+            color: green !important;
+            border-radius: 20px;
+            border-color: #494949 !important;
+            transition: all 0.3s ease 0s;
+        }
+
+        .btn_editors {
+            background-color: #f0ba11;
+        }
+
+        .btn_admins {
+            background-color: #544CD0;
+        }
+
+        .animation_effect {
+        {#background-color: #f1f2f6;#} padding-bottom: 20vh;
+            animation: slide-up 2s;
+        }
+
+        @keyframes slide-up {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+{% endblock %}
+
+{# Testing #}
+
+
+{##}
+{#<form action="." method="post" enctype="multipart/form-data">#}
+{#    {{ profile_form.name }}#}
+{#    {{ form.as_p }}#}
+{#    {% csrf_token %}#}
+{#    <input type="submit" value="Submit">#}
+{#</form>#}

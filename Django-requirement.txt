@@ -1,0 +1,49 @@
+1. The work done
+ First, the working done until now was to be updated the whole pages except the Student admin panel.
+ And, I added the editing function of the document, but I did not change the edited data to the image data. 
+ I completed the adding function to the serveral users and Excel file.
+
+
+Please let the next developer know to refer the following password change stage.
+The Admin or SuperAdmin can change the password of the users at any time.
+- ip:port/aDmInPanel_URL-Should_AlwaYs_HardER_toGetTO__ThatPage/admin/
+ex. https://192.168.x.xx/aDmInPanel_URL-Should_AlwaYs_HardER_toGetTO__ThatPage/admin/
+- passward: testing321
+  username: Admin(or SuperAdmin)
+- Select the xxx user
+- Click the "Change selected user button" and then click "this form"(color-> red) part in the details of password.
+	remark: Don't forgot saving
+
+Development envirenment:
+	python 3.6
+	django 2.2.3
+
+	venv -> python manage.py runserver
+
+The username and password of the users
+
+   username          password
+   Admin             testing321
+   SuperAdmin        testing321
+   Editor            testing321
+   Curator2          testing321
+   Marketer2         testing321
+   Marketer3         testing321
+   School            testing321
+   Teacher1          testing321
+
+(Remark: Please let me know at any time if there are any issues in the future development.
+I will be happy to help you)
+2. The remaining work
+In the overall, the remaining work is to update the UIs and complete the necessary functions in the whole pages of the Student admin panel
+
+The requirements for the Student admin panel as follows:
+- School students should be able to view their own records.
+- School students should be able to answer questions on the site and those created by
+their own teachers.
+- Should be able to
+
+Here, the difference of the aonestudent and SchoolStudent as follows:
+AoneStudent are student's that are not affiliated to any school, they registered on their own. 
+while Schoolstudent are those that a school registers.
+Aonestudent can only view contents that have been made by aone curators and admin, while school students can view both contents made by aone curator and their school's curator or teachers. 

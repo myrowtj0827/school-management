@@ -1,0 +1,474 @@
+{% load static %}
+{% load widget_tweaks %}
+{% load quiz_tags %}
+{#{% load django_bootstrap_breadcrumbs %}#}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- jQuery -->
+    <script src="{% static "vendor/jquery.min.js" %}"></script>
+
+    <!-- Perfect Scrollbar -->
+    <link type="text/css" href="{% static "vendor/perfect-scrollbar.css" %}" rel="stylesheet">
+
+    <!-- Material Design Icons -->
+    <link type="text/css" href="{% static "css/material-icons.css" %}" rel="stylesheet">
+    <link type="text/css" href="{% static "css/material-icons.rtl.css" %}" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link type="text/css" href="{% static "css/fontawesome.css" %}" rel="stylesheet">
+    <link type="text/css" href="{% static "css/fontawesome.rtl.css" %}" rel="stylesheet">
+
+    <!-- App CSS -->
+    <link type="text/css" href="{% static "css/app.css" %}" rel="stylesheet">
+    <link type="text/css" href="{% static "css/app.rtl.css" %}" rel="stylesheet">
+
+    <!-- Fresh Bootstrap Table CSS -->
+    <link type="text/css" href="{% static "css/fresh-bootstrap-table/fresh-bootstrap-table.css" %}" rel="stylesheet">
+
+    <link type="text/css" href="{% static "css/tables/w3-css.css" %}" rel="stylesheet">
+
+    <meta charset="UTF-8"/>
+    <title>{% block title %}AoneBrain{% endblock %}</title>
+</head>
+
+thank
+<body class="layout-fluid">
+
+<div class="preloader">
+    <div class="sk-double-bounce">
+        <div class="sk-child sk-double-bounce1"></div>
+        <div class="sk-child sk-double-bounce2"></div>
+    </div>
+</div>
+
+<!-- Header Layout -->
+<div class="mdk-header-layout js-mdk-header-layout"
+     style="background-image: linear-gradient(-225deg, #FFFEFF 0%, #D7FFFE 100%); padding-bottom: 50px;">
+    <!-- Header -->
+    <div id="header" data-fixed class="mdk-header js-mdk-header mb-0">
+        <div class="mdk-header__content">
+            <!-- Navbar -->
+            <nav id="default-navbar" class="navbar navbar-expand navbar-dark m-0"
+                 style="background-image: linear-gradient(45deg, #8900fe, #2e89fe 50%, #00e8fe);">
+                <div class="w3-row container-fluid">
+                    <!-- Toggle sidebar -->
+                    <button class="w3-left w3-btn navbar-toggler d-block" data-toggle="sidebar" type="button">
+                        <span class="material-icons">menu</span>
+                    </button>
+                    <!-- Brand -->
+                    <div class="w3-left">
+                        {% if request.user.account_type != "school" or request.user.account_type != "teacher" or request.user.account_type != "student" %}
+                            <a href="{% url "dashboard" %}" class="navbar-brand">
+                                {#                            <img src="{% static "images/logo/white.svg" %}" class="mr-2" alt="AoneBrain" />#}
+                                <span class="d-none d-xs-md-block w3-margin-right"
+                                      style="color: #ffff00; font-size: 30px;">AoneBrain</span>
+                            </a>
+                        {% endif %}
+                    </div>
+                    {% block Brand %}
+
+                    {% endblock %}
+
+                    <div class="flex"></div>
+                    {% if not request.user.is_anonymous %}
+                        <!-- vertical Menu -->
+                        <ul class="nav navbar-nav flex-nowrap" style="margin-right: 20px;">
+                            <li class="nav-item dropdown ml-1 ml-md-3">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+                                   role="button" style="color: black; font-weight: bold;">Avatar
+                                    {#                                    {% if request.user.avatar %}#}
+                                    {#                                        <img src="{{ request.user.avatar.url }}" alt="Avatar" class="rounded-circle"#}
+                                    {#                                             width="40" height="35">#}
+                                    {#                                    {% endif %}#}
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right"
+                                     style="background-image: linear-gradient(to top, #d5dee7 0%, #ffafbd 0%, #c9ffbf 100%);">
+                                    <a class="dropdown-item w3-hover-light-blue"
+                                            {% if request.user.account_type == 'school' or request.user.account_type == 'teacher' %}
+                                       href="{% url "schools:profile" %}"
+                                            {% elif request.user.account_type == 'super admin' or request.user.account_type == 'curator' or request.user.account_type == 'editor' or request.user.account_type == 'admin' or request.user.account_type == 'marketer' %}
+                                       href="{% url "accounts:profile" %}"
+                                            {% endif %}>
+                                        <i class="material-icons">person</i> My Profile
+                                    </a>
+                                    <a class="dropdown-item w3-hover-light-blue"
+                                       href="{% url 'accounts:password_change' %}">
+                                        <i class="material-icons">undo</i> Change Password
+                                    </a>
+                                    <a class="dropdown-item w3-hover-light-blue" href="{% url 'accounts:logout' %}">
+                                        <i class="material-icons">lock</i> Logout
+                                    </a>
+                                </div>
+                            </li>
+                            <!-- // END User dropdown -->
+
+                        </ul>
+                        <!-- // END Menu -->
+                    {% endif %}
+                </div>
+            </nav>
+            <!-- // END Navbar -->
+        </div>
+    </div>
+
+    <!-- Header Layout Content -->
+    <div class="mdk-header-layout__content">
+        <div data-push data-responsive-width="992px" class="mdk-drawer-layout js-mdk-drawer-layout">
+            {% block content %}
+            {% endblock %}
+
+            {#side menu starts here#}
+            {% if not request.user.is_anonymous %}
+                <div class="mdk-drawer js-mdk-drawer" id="default-drawer">
+                    <div class="mdk-drawer__content ">
+                        <div class="sidebar sidebar-left o-hidden" data-perfect-scrollbar
+                             style="background-image: linear-gradient(to top, #c1dfc4 0%, #deecdd 50%); width: 85%;">
+                            <div class="sidebar-p-y">
+                                {% if request.user.account_type == 'admin' %}
+                                    <ul class="sidebar-menu sm-active-button-bg">
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "accounts:admin_dashboard" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Dashboard
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "aonebrains_courses:class_list" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Classes
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "accounts:curator_list" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Curators
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "accounts:editor_list" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Editors
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "accounts:marketer_list" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Marketers
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "aonebrains_courses:subject_list" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Subjects
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "accounts:course_list" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Courses
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;" href="{% url "accounts:list" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Super Admins
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "accounts:students_list" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Students
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "schools:schools_list" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Schools
+                                            </a>
+                                        </li>
+                                    </ul>
+                                {% elif request.user.account_type == 'super admin' %}
+                                    <ul class="sidebar-menu sm-active-button-bg">
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "accounts:super_admin_dashboard" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Dashboard
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "accounts:curator_list" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Curators
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "accounts:editor_list" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Editors
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "accounts:superAdmin_marketers_list" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Marketers
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "aonebrains_courses:course_list" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Courses
+                                            </a>
+                                        </li>
+                                    </ul>
+                                {% elif request.user.account_type == 'editor' %}
+                                    <ul class="sidebar-menu sm-active-button-bg">
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "accounts:editor_dashboard" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Dashboard
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "accounts:curator_list" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Curators
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "aonebrains_courses:course_list" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Courses
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                {% elif request.user.account_type == 'school' %}
+                                    <ul class="sidebar-menu sm-active-button-bg">
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "schools:dashboard" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Dashboard
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "schools:teachers:list" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Instructors
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "schools:students:list" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Students
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "school_courses:subject_list" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Subjects
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "schools:courses:course_list" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Courses
+                                            </a>
+                                        </li>
+                                    </ul>
+                                {% elif request.user.account_type == 'teacher' %}
+                                    <ul class="sidebar-menu sm-active-button-bg">
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "schools:teachers:dashboard" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Dashboard
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "schools:teachers:students:list" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Students
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "schools:teachers:courses:manage_course_list" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Courses
+                                            </a>
+                                        </li>
+                                    </ul>
+                                {% elif request.user.account_type == 'curator' %}
+                                    <ul class="sidebar-menu sm-active-button-bg">
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "accounts:curator_dashboard" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Dashboard
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "aonebrains_courses:curator_courses" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Courses
+                                            </a>
+                                        </li>
+                                    </ul>
+                                {% elif request.user.account_type == 'marketer' %}
+                                    <ul class="sidebar-menu sm-active-button-bg">
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "accounts:marketer_dashboard" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Dashboard
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button example_d"
+                                               style="color: #a47e3c; font-weight: bold;"
+                                               href="{% url "accounts:marketer_school_list" %}">
+                                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">school</i>
+                                                Schools
+                                            </a>
+                                        </li>
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {#                side menu ends here#}
+            {% endif %}
+        </div>
+    </div>
+    <!-- // END Header -->
+    <div style="background-image: linear-gradient(45deg, #8900fe, #2e89fe 50%, #00e8fe); height: 40px; width: 100%; position: absolute; bottom: 0; left: 0;">
+
+    </div>
+
+</div>
+
+
+<!-- Bootstrap -->
+<script src="{% static "vendor/popper.min.js" %}"></script>
+<script src="{% static "vendor/bootstrap.min.js" %}"></script>
+<!-- Perfect Scrollbar -->
+<script src="{% static "vendor/perfect-scrollbar.min.js" %}"></script>
+<!-- MDK -->
+<script src="{% static "vendor/dom-factory.js" %}"></script>
+<script src="{% static "vendor/material-design-kit.js" %}"></script>
+<!-- App JS -->
+<script src="{% static "js/app.js" %}"></script>
+<!-- Highlight.js -->
+<script src="{% static "js/hljs.js" %}"></script>
+<!-- App Settings (safe to remove) -->
+<script src="{% static "js/app-settings.js" %}"></script>
+<!-- Global Settings -->
+<script src="{% static "js/settings.js" %}"></script>
+<!-- Moment.js -->
+<script src="{% static "vendor/moment.min.js" %}"></script>
+<script src="{% static "vendor/moment-range.min.js" %}"></script>
+
+<!--+++++++++++++++++++++++++++++++++++++++++++++++++  Closed script by me 02/24/2020 --Start +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- Chart.js -->
+<script src="{% static "vendor/Chart.min.js" %}"></script>
+<!-- UI Charts Page JS -->
+<script src="{% static "js/chartjs-rounded-bar.js" %}"></script>
+<script src="{% static "js/chartjs.js" %}"></script>
+<!-- Chart.js Samples -->
+<script src="{% static "js/page.student-dashboard.js" %}"></script>
+<!-- List.js -->
+<script src="{% static 'vendor/list.min.js' %}"></script>
+<script src="{% static 'js/list.js' %}"></script>
+<!-- Tables -->
+<!--+++++++++++++++++++++++++++++++++++++++++++++++++  Closed script by me 02/24/2020 --End +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+<script src="{% static 'js/toggle-check-all.js' %}"></script>
+<script src="{% static 'js/check-selected-row.js' %}"></script>
+
+<script src="{% static "vendor/jquery.min.js" %}"></script>
+<script src="{% static "vendor/bootstrap-table.min.js" %}"></script>
+</body>
+<footer>
+
+</footer>
+</html>
+<style>
+
+    .example_d {
+        text-transform: uppercase;
+        border-radius: 12px;
+        display: inline-block;
+        transition: all 0.3s ease 0s;
+        margin: 15px;
+        color: white;
+        font-weight: bold;
+    }
+
+    .example_d:hover {
+        color: blue !important;
+        border-radius: 20px;
+        border-color: #494949 !important;
+        transition: all 0.2s ease 0s;
+    }
+
+</style>

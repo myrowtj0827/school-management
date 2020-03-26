@@ -1,0 +1,753 @@
+{% extends "base.html" %}
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block content %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <div class="w3-col mdk-drawer-layout__content page">
+        <div class="w3-card"
+             style="background-image: linear-gradient(45deg, #2e89fe, #8900fe 50%, #00e8fe); border-radius: 10px; margin-bottom: 40px;">
+            <h1 class="h2 w3-center" style="color: #06f26a;">Admin Dashboard</h1>
+            <!-- +++++++++++++++++++++++++  Dashboard Button - Start  +++++++++++++++++++++++ -->
+            <div class="w3-container w3-center">
+                <div class="w3-btn example_d btn_admins w3-left" style="text-decoration-line: none; margin-right: 10px;"
+                     onclick="history.back()">
+                    <a><i class="fas fa-arrow-left"></i></a>
+                </div>
+
+                <div class="w3-btn example_d btn_admins w3-left" style="text-decoration-line: none;"
+                     onclick="history.forward()">
+                    <a><i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="w3-bar">
+                    <div id="headingUnfiled" class="w3-bar-item w3-btn example_d btn_courses" data-toggle="collapse"
+                         href="#collapseUnfiled" style="text-decoration: none; outline: none; margin-right: 5px;"
+                         target="_blank" rel="nofollow noopener">
+                        COURSES
+                    </div>
+                    <div id="heading79" class="w3-bar-item w3-btn example_d btn_editors" data-toggle="collapse"
+                         href="#collapse79" style="text-decoration: none; outline: none; margin-right: 5px;"
+                         target="_blank" rel="nofollow noopener">EDITORS
+                    </div>
+                    <div id="heading80" class="w3-bar-item w3-btn example_d btn_admins" data-toggle="collapse"
+                         href="#collapse80"
+                         style="text-decoration: none; outline: none; margin-right: 5px;" target="_blank"
+                         rel="nofollow noopener">ADMINS
+                    </div>
+                    <div id="heading81" class="w3-bar-item w3-btn example_d btn_curators" data-toggle="collapse"
+                         href="#collapse81"
+                         style="text-decoration: none; outline: none; margin-right: 5px;" target="_blank"
+                         rel="nofollow noopener">CURATORS
+                    </div>
+                    <div id="heading82" class="w3-bar-item w3-btn example_d btn_schools" data-toggle="collapse"
+                         href="#collapse82"
+                         style="text-decoration: none; outline: none; margin-right: 5px;" target="_blank"
+                         rel="nofollow noopener">SCHOOLS
+                    </div>
+                    <div id="heading83" class="w3-bar-item w3-btn example_d btn_teachers" data-toggle="collapse"
+                         href="#collapse83"
+                         style="text-decoration: none; outline: none; margin-right: 5px;" target="_blank"
+                         rel="nofollow noopener">SCHOOL TEACHERS
+                    </div>
+                    <div id="heading84" class="w3-bar-item w3-btn example_d btn_quizzes" data-toggle="collapse"
+                         href="#collapse84"
+                         style="text-decoration: none; outline: none; margin-right: 5px;" target="_blank"
+                         rel="nofollow noopener">SCHOOL QUIZZES
+                    </div>
+                    <div id="heading85" class="w3-bar-item w3-btn example_d btn_students" data-toggle="collapse"
+                         href="#collapse85"
+                         style="text-decoration: none; outline: none; margin-right: 5px;" target="_blank"
+                         rel="nofollow noopener">SCHOOL STUDENTS
+                    </div>
+                    <div id="heading86" class="w3-bar-item w3-btn example_d btn_schoolCurators"
+                         data-toggle="collapse"
+                         href="#collapse86" style="text-decoration: none; outline: none; margin-right: 5px;"
+                         target="_blank" rel="nofollow noopener">SCHOOL COURSES
+                    </div>
+                    <div id="heading87" class="w3-bar-item w3-btn example_d btn_quizzes" data-toggle="collapse"
+                         href="#collapse87" style="text-decoration: none; outline: none;" target="_blank"
+                         rel="nofollow noopener">QUIZZES
+                    </div>
+                </div>
+            </div>
+            <!-- +++++++++++++++++++++++++  Dashboard Button - End  +++++++++++++++++++++++ -->
+        </div>
+
+        <!--Accordion wrapper-->
+        <div class="w3-row accordion md-accordion accordion-blocks" id="accordionEx78" role="tablist"
+             aria-multiselectable="true">
+            <div class="w3-half">
+                <div class="w3-row" style="width: 95%;">
+                    <!-- +++++++++++++++++++++++++++ Courses Table - Start +++++++++++++++++++++++++-->
+                    <div class="card">
+                        <div class="card-header w3-right-align w3-hover-khaki" role="tab" id="headingUnfiled"
+                             style="background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);">
+                            <a data-toggle="collapse" href="#collapseUnfiled"
+                               aria-expanded="true" aria-controls="collapseUnfiled" style="text-decoration: none;">
+                                <h3 class="mt-1 mb-0">
+                                    <span class="dashboard_textColor">Courses</span>
+                                    <i class="fas fa-angle-down rotate-icon"></i>
+                                </h3>
+                                <a href="{% url "aonebrains_courses:course_list" %}">Latest Courses</a>
+                            </a>
+                        </div>
+                        <div id="collapseUnfiled" class="collapse" role="tabpanel" aria-labelledby="headingUnfiled">
+                            <div class="card-body">
+                                <div data-toggle="lists"
+                                     data-lists-values='[ "js-lists-values-course", "js-lists-values-curator", "js-lists-values-grade", "js-lists-values-date" ]'
+                                     data-lists-sort-by="js-lists-values-date" data-lists-sort-desc="true"
+                                     class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                        <tr class="w3-light-grey w3-hover-red">
+
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-course">COURSE</a></th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-curator">CURATOR</a></th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-grade">GRADE</a></th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-date">DATE</a></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="list">
+                                        {#                                        {% for course in courses| %}#}
+                                        {% for course in courses|slice:"-5:" %}
+                                            <tr>
+                                                <td>
+                                                    <a href="{% url "aonebrains_courses:course_detail" course.slug %}"
+                                                       class="avatar avatar-4by3 avatar-sm mr-3 js-lists-values-course"
+                                                       style="color: black; font-weight: bold; text-decoration-line: underline; width: 60px; height:  60px;">
+                                                        {% if course.preview %}
+                                                            <img src="{{ course.preview.url }}" alt="course"
+                                                                 class="avatar-img rounded">
+                                                        {% endif %}
+                                                    </a>
+                                                </td>
+                                                <td><strong><span
+                                                        class="js-lists-values-curator">{{ course.title }}</span></strong>
+                                                </td>
+                                                <td>
+                                                    Teacher:
+                                                    <a href="{% url "accounts:curator_detail" course.creator.slug %}"
+                                                       style="color: black; font-weight: bold; text-decoration-line: underline;"
+                                                       class="js-lists-values-teacher">
+                                                        {{ course.creator.user.first_name }}</a>
+                                                    -
+                                                    class: <span
+                                                        class="js-lists-values-grade">{{ course.grade }}</span>
+                                                </td>
+                                                <td><small class="js-lists-values-date">{{ course.created }}</small>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- +++++++++++++++++++++++++++ Courses Table - End +++++++++++++++++++++++++-->
+
+
+                    <!-- +++++++++++++++++++++++++++ Editor Table - Start +++++++++++++++++++++++++-->
+                    <div class="card">
+                        <div class="card-header w3-right-align w3-hover-khaki" role="tab" id="heading79"
+                             style="background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);">
+                            <a data-toggle="collapse" href="#collapse79"
+                               aria-expanded="true" aria-controls="collapse79" style="text-decoration: none;">
+                                <h3 class="mt-1 mb-0">
+                                    <span class="dashboard_textColor">Editors</span>
+                                    <i class="fas fa-angle-down rotate-icon"></i>
+                                </h3>
+                                <a href="{% url "accounts:editor_list" %}">New Editors</a>
+                            </a>
+                        </div>
+                        <div id="collapse79" class="collapse" role="tabpanel" aria-labelledby="heading79">
+                            <div class="card-body">
+                                <div data-toggle="lists"
+                                     data-lists-values='[ "js-lists-values-teacher", "js-lists-values-admin", "js-lists-values-date" ]'
+                                     data-lists-sort-by="js-lists-values-date" data-lists-sort-desc="true"
+                                     class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                        <tr class="w3-light-grey w3-hover-red">
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-teacher">EDITOR</a></th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-admin">ADMIN</a></th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-date">DATE</a></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="list">
+                                        {% for editor in editors|slice:"-5:" %}
+                                            <tr>
+                                                <td><strong><a href="#"
+                                                               style="color: black; font-weight: bold; text-decoration-line: underline;"><span
+                                                        class="js-lists-values-teacher">{{ editor.user.first_name }}</span></a></strong>
+                                                </td>
+                                                <td>
+                                                    admin: <span
+                                                        class="js-lists-values-admin">{{ editor.admin }}</span>
+                                                </td>
+                                                <td><small
+                                                        class="js-lists-values-date">{{ editor.user.date_joined }}</small>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- +++++++++++++++++++++++++++ Editor Table - End +++++++++++++++++++++++++-->
+
+
+                    <!-- +++++++++++++++++++++++++++ Admin Table - Start +++++++++++++++++++++++++-->
+                    <div class="card">
+                        <div class="card-header w3-right-align w3-hover-khaki" role="tab" id="heading80"
+                             style="background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);">
+                            <a data-toggle="collapse" href="#collapse80"
+                               aria-expanded="true" aria-controls="collapse80" style="text-decoration: none;">
+                                <h3 class="mt-1 mb-0">
+                                    <span class="dashboard_textColor">Admins</span>
+                                    <i class="fas fa-angle-down rotate-icon"></i>
+                                </h3>
+                                <a href="#">New Admins</a>
+                            </a>
+                        </div>
+                        <div id="collapse80" class="collapse" role="tabpanel" aria-labelledby="heading80">
+                            <div class="card-body">
+                                <div data-toggle="lists"
+                                     data-lists-values='[ "js-lists-values-admin", "js-lists-values-date" ]'
+                                     data-lists-sort-by="js-lists-values-date" data-lists-sort-desc="true"
+                                     class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                        <tr class="w3-light-grey w3-hover-red">
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-admin">ADMIN</a></th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-date">DATE</a></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="list">
+                                        {% for super_admin in super_admins|slice:"-5:" %}
+                                            <tr>
+                                                <td><strong><a href="#"
+                                                               style="color: black; font-weight: bold; text-decoration-line: underline;"><span
+                                                        class="js-lists-values-admin">{{ super_admin.user.first_name }}</span></a></strong>
+                                                    Editor: <a href="#"
+                                                               style="color: inherit;">{{ super_admin.editor.count }}</a>
+                                                    Curators: <span
+                                                            class="js-lists-values-grade">{{ super_admin.curator.count }}</span>
+                                                </td>
+                                                <td><small
+                                                        class="js-lists-values-date">{{ super_admin.user.date_joined }}</small>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- +++++++++++++++++++++++++++ Admin Table - End +++++++++++++++++++++++++-->
+
+                    <!-- +++++++++++++++++++++++++ Curator Table - Start +++++++++++++++++++++++-->
+                    <div class="card">
+                        <div class="card-header w3-right-align w3-hover-khaki" role="tab" id="heading81"
+                             style="background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);">
+                            <a data-toggle="collapse" href="#collapse81"
+                               aria-expanded="true" aria-controls="collapse81" style="text-decoration: none;">
+                                <h3 class="mt-1 mb-0">
+                                    <span class="dashboard_textColor">Curators</span>
+                                    <i class="fas fa-angle-down rotate-icon"></i>
+                                </h3>
+                                <a href="#">New Curators</a>
+                            </a>
+                        </div>
+                        <div id="collapse81" class="collapse" role="tabpanel" aria-labelledby="heading81">
+                            <div class="card-body">
+                                <div data-toggle="lists"
+                                     data-lists-values='[ "js-lists-values-curator", "js-lists-values-admin", "js-lists-values-date" ]'
+                                     data-lists-sort-by="js-lists-values-date" data-lists-sort-desc="true"
+                                     class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                        <tr class="w3-light-grey w3-hover-red">
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-curator">Curator</a></th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-admin">ADMIN</a></th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-date">DATE</a></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="list">
+                                        {% for curator in curators|slice:"-5:" %}
+                                            <tr>
+                                                <td><strong><a href="#"
+                                                               style="color: black; font-weight: bold; text-decoration-line: underline;"><span
+                                                        class="js-lists-values-curator">{{ curator.user.first_name }}</span></a></strong>
+                                                </td>
+                                                <td>
+                                                    Admin: <span
+                                                        class="js-lists-values-admin">{{ curator.admin }}</span>
+                                                </td>
+                                                <td><small
+                                                        class="js-lists-values-date">{{ curator.user.date_joined }}</small>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- +++++++++++++++++++++++++ Curator Table - End +++++++++++++++++++++++-->
+
+                    <!-- +++++++++++++++++++++++++ Schools Table - Start +++++++++++++++++++++++-->
+                    <div class="card">
+                        <div class="card-header w3-right-align w3-hover-khaki" role="tab" id="heading82"
+                             style="background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);">
+                            <a data-toggle="collapse" href="#collapse82"
+                               aria-expanded="true" aria-controls="collapse82" style="text-decoration: none;">
+                                <h3 class="mt-1 mb-0">
+                                    <span class="dashboard_textColor">Schools</span>
+                                    <i class="fas fa-angle-down rotate-icon"></i>
+                                </h3>
+                                <a href="#">New Schools</a>
+                            </a>
+                        </div>
+                        <div id="collapse82" class="collapse" role="tabpanel" aria-labelledby="heading82">
+                            <div class="card-body">
+                                <div data-toggle="lists"
+                                     data-lists-values='[ "js-lists-values-schoolName", "js-lists-values-student", "js-lists-values-teacher", "js-lists-values-date" ]'
+                                     data-lists-sort-by="js-lists-values-date" data-lists-sort-desc="true"
+                                     class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                        <tr class="w3-light-grey w3-hover-red">
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-schoolName">School Name</a></th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-teacher">Teachers</a></th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-student">Students</a></th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-date">Date</a></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="list">
+                                        {% for school in schools|slice:"-5:" %}
+                                            <tr>
+                                                <td><strong><a href="#"
+                                                               style="color: black; font-weight: bold; text-decoration-line: underline;"><span
+                                                        class="js-lists-values-school">{{ school.name }}</span></a></strong>
+                                                </td>
+                                                <td>
+                                                    Teachers: <a href="#"
+                                                                 style="color: black; font-weight: bold; text-decoration-line: underline;">{{ school.teachers.count }}</a>
+                                                </td>
+                                                <td>
+                                                    Students: <span
+                                                        class="js-lists-values-student">{{ school.students.count }}</span>
+                                                </td>
+                                                <td>
+                                                    <small class="js-lists-values-date">{{ school.user.date_joined }}</small>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- +++++++++++++++++++++++++ Schools Table - End +++++++++++++++++++++++-->
+                </div>
+            </div>
+
+            <div class="w3-half">
+                <div class="w3-row" style="width: 95%;">
+                    <!-- +++++++++++++++++++++ School teachers Table - Start +++++++++++++++++++-->
+                    <div class="card">
+                        <div class="card-header w3-right-align w3-hover-khaki" role="tab" id="heading83"
+                             style="background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);">
+                            <a data-toggle="collapse" href="#collapse83"
+                               aria-expanded="true" aria-controls="collapse83" style="text-decoration: none;">
+                                <h3 class="mt-1 mb-0">
+                                    <span class="dashboard_textColor">School Teachers</span>
+                                    <i class="fas fa-angle-down rotate-icon"></i>
+                                </h3>
+                                <a href="#">New Teachers</a>
+                            </a>
+                        </div>
+                        <div id="collapse83" class="collapse" role="tabpanel" aria-labelledby="heading83">
+                            <div class="card-body">
+                                <div data-toggle="lists"
+                                     data-lists-values='[ "js-lists-values-teacher", "js-lists-values-school", "js-lists-values-date" ]'
+                                     data-lists-sort-by="js-lists-values-date" data-lists-sort-desc="true"
+                                     class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                        <tr class="w3-light-grey w3-hover-red">
+                                            <th>Photo</th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-teacher">Teacher</a></th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-school">School</a></th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-date">Date</a></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="list">
+                                        {% for teacher in school_teachers|slice:"-5:" %}
+                                            <tr>
+
+                                                {% if teacher.user.avatar %}
+                                                    <td>
+                                                        <img style="width: 60px; height: 60px;" src="{{ teacher.user.avatar.url }}">
+                                                    </td>
+                                                {% endif %}
+                                                <td><strong><a href="{% url "schools:teachers:detail" teacher.id %}"
+                                                               style="color: black; font-weight: bold; text-decoration-line: underline;"><span
+                                                        class="js-lists-values-teacher">{{ teacher.user.first_name }}</span></a></strong>
+                                                </td>
+                                                <td>
+                                                    <span class="js-lists-values-school">{{ teacher.school }}</span>
+                                                </td>
+                                                <td>
+                                                    <small class="js-lists-values-date">{{ teacher.user.date_joined }}</small>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- +++++++++++++++++++++ School teachers Table - End +++++++++++++++++++-->
+
+
+                    <!-- ++++++++++++++++++++++ School Quizzes Table - Start +++++++++++++++++++-->
+                    <div class="card">
+                        <div class="card-header w3-right-align w3-hover-khaki" role="tab" id="heading84"
+                             style="background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);">
+                            <a data-toggle="collapse" href="#collapse84"
+                               aria-expanded="true" aria-controls="collapse84" style="text-decoration: none;">
+                                <h3 class="mt-1 mb-0">
+                                    <span class="dashboard_textColor">School Quizzes</span>
+                                    <i class="fas fa-angle-down rotate-icon"></i>
+                                </h3>
+                                <a href="#">New Quizzes</a>
+                            </a>
+                        </div>
+                        <div id="collapse84" class="collapse" role="tabpanel" aria-labelledby="heading84">
+                            <div class="card-body">
+                                <div data-toggle="lists"
+                                     data-lists-values='[ "js-lists-values-quiz", "js-lists-values-teacher", "js-lists-values-school" ]'
+                                     data-lists-sort-by="js-lists-values-date" data-lists-sort-desc="true"
+                                     class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                        <tr class="w3-light-grey w3-hover-red">
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-quiz">Quiz</a></th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-teacher">Teacher</a></th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-school">School</a></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="list">
+                                        {% for quiz in school_quizzes|slice:"-5:" %}
+                                            <tr>
+                                                <td><strong><a href="#"
+                                                               style="color: black; font-weight: bold; text-decoration-line: underline;"><span
+                                                        class="js-lists-values-quiz">{{ quiz.title }}</span></a></strong><br>
+                                                </td>
+                                                <td>
+                                                    <a href="#" class="js-lists-values-teacher"
+                                                       style="color: black; font-weight: bold; text-decoration-line: underline;">{{ quiz.course.teacher.user.first_name }}</a>
+                                                </td>
+                                                <td>
+                                                    <span class="js-lists-values-school">{{ quiz.course.teacher.school }}</span>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ++++++++++++++++++++++ School Quizzes Table - End +++++++++++++++++++-->
+
+
+                    <!-- +++++++++++++++++++++ School Students Table - Start +++++++++++++++++++-->
+                    <div class="card">
+                        <div class="card-header w3-right-align w3-hover-khaki" role="tab" id="heading85"
+                             style="background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);">
+                            <a data-toggle="collapse" href="#collapse85"
+                               aria-expanded="true" aria-controls="collapse85" style="text-decoration: none;">
+                                <h3 class="mt-1 mb-0">
+                                    <span class="dashboard_textColor" href="#">School Students</span>
+                                    <i class="fas fa-angle-down rotate-icon"></i>
+                                </h3>
+                                <a>New Students</a>
+                            </a>
+                        </div>
+                        <div id="collapse85" class="collapse" role="tabpanel" aria-labelledby="heading85">
+                            <div class="card-body">
+                                <div data-toggle="lists"
+                                     data-lists-values='[ "js-lists-values-student", "js-lists-values-school", "js-lists-values-date" ]'
+                                     data-lists-sort-by="js-lists-values-date" data-lists-sort-desc="true"
+                                     class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                        <tr class="w3-light-grey w3-hover-red">
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-student">Student</a></th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-school">School</a></th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-date">Date</a></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="list">
+                                        {% for student in school_students|slice:"-5:" %}
+                                            <tr>
+                                                <td><strong><a href="#"
+                                                               style="color: black; font-weight: bold; text-decoration-line: underline;"><span
+                                                        class="js-lists-values-student">{{ student.user.first_name }}</span></a></strong>
+                                                </td>
+                                                <td>
+                                                    <span class="js-lists-values-school">{{ student.school }}</span>
+                                                </td>
+                                                <td>
+                                                    <small class="js-lists-values-date">{{ student.user.date_joined }}</small>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- +++++++++++++++++++++ School Students Table - End +++++++++++++++++++-->
+
+
+                    <!-- +++++++++++++++++++++ School Courses Table - Start ++++++++++++++++++++-->
+                    <div class="card">
+                        <div class="card-header w3-right-align w3-hover-khaki" role="tab" id="heading86"
+                             style="background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);">
+                            <a data-toggle="collapse" href="#collapse86"
+                               aria-expanded="true" aria-controls="collapse86" style="text-decoration: none;">
+                                <h3 class="mt-1 mb-0">
+                                    <span class="dashboard_textColor">School Courses</span>
+                                    <i class="fas fa-angle-down rotate-icon"></i>
+                                </h3>
+                                <a href="{% url "aonebrains_courses:course_list" %}">New Courses</a>
+                            </a>
+                        </div>
+                        <div id="collapse86" class="collapse" role="tabpanel" aria-labelledby="heading86">
+                            <div class="card-body">
+                                <div data-toggle="lists"
+                                     data-lists-values='[ "js-lists-values-course", "js-lists-values-subject", "js-lists-values-teacher", "js-lists-values-school", "js-lists-values-date" ]'
+                                     data-lists-sort-by="js-lists-values-date" data-lists-sort-desc="true"
+                                     class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                        <tr class="w3-light-grey w3-hover-red">
+
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-course">Course</a></th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-subject">Subject</a></th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-teacher">Teacher</a></th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-school">School</a></th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-date">Date</a></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="list">
+                                        {% for course in school_courses|slice:"-5:" %}
+                                            <tr>
+                                                <td>
+                                                    <a href="#"
+                                                       class="avatar avatar-4by3 avatar-sm mr-3 js-lists-values-course"
+                                                       style="width: 70px">
+                                                        {% if course.preview %}
+                                                            <img src="{{ course.preview.url }}" alt="course"
+                                                                 class="avatar-img rounded">
+                                                        {% endif %}
+                                                    </a>
+                                                </td>
+                                                <td><strong><span
+                                                        class="js-lists-values-subject">{{ course.title }}</span></strong>
+                                                </td>
+                                                <td>
+                                                    <a class="js-lists-values-teacher" href="#"
+                                                       style="color: black; font-weight: bold; text-decoration-line: underline;">{{ course.creator.user.first_name }}</a>
+                                                </td>
+                                                <td>
+                                                    <span class="js-lists-values-school">{{ course.school.name }}</span>
+                                                </td>
+                                                <td><small class="js-lists-values-date">{{ course.created }}</small>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- +++++++++++++++++++++ School Courses Table - End ++++++++++++++++++++-->
+
+
+                    <!-- +++++++++++++++++++++++++++ Quizzes Table - Start +++++++++++++++++++++-->
+                    <div class="card">
+                        <div class="card-header w3-right-align w3-hover-khaki" role="tab" id="heading87"
+                             style="background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);">
+                            <a data-toggle="collapse" href="#collapse87"
+                               aria-expanded="true" aria-controls="collapse87" style="text-decoration: none;">
+                                <h3 class="mt-1 mb-0">
+                                    <span class="dashboard_textColor">Quizzes</span>
+                                    <i class="fas fa-angle-down rotate-icon"></i>
+                                </h3>
+                                <a href="#">New Quizzes</a>
+                            </a>
+                        </div>
+                        <div id="collapse87" class="collapse" role="tabpanel" aria-labelledby="heading87">
+                            <div class="card-body">
+                                <div data-toggle="lists"
+                                     data-lists-values='[ "js-lists-values-quiz", "js-lists-values-curator" ]'
+                                     data-lists-sort-by="js-lists-values-date" data-lists-sort-desc="true"
+                                     class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                        <tr class="w3-light-grey w3-hover-red">
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-quiz">Quiz</a></th>
+                                            <th><a href="javascript:void(0)" class="sort"
+                                                   data-sort="js-lists-values-curator">Curator</a></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="list">
+                                        {% for quiz in quizzes|slice:"-5:" %}
+                                            <tr>
+                                                <td><strong><a href="#"
+                                                               style="color: black; font-weight: bold; text-decoration-line: underline;"><span
+                                                        class="js-lists-values-quiz">{{ quiz.title }}</span></a></strong>
+                                                </td>
+                                                <td>
+                                                    <span class="js-lists-values-curator">{{ quiz.course.creator.user.first_name }}</span>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- +++++++++++++++++++++++++++ Quizzes Table - End +++++++++++++++++++++-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .example_d {
+            text-transform: uppercase;
+            border-radius: 12px;
+            display: inline-block;
+            transition: all 0.3s ease 0s;
+            margin-bottom: 10px;
+            margin-top: 30px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .example_d:hover {
+            color: #494949 !important;
+            border-radius: 50px;
+            border-color: #494949 !important;
+            transition: all 0.3s ease 0s;
+        }
+
+        .btn_courses {
+            background-color: #4089d0;
+        }
+
+        .btn_editors {
+            background-color: #f0ba11;
+        }
+
+        .btn_quizzes {
+            background-color: #06f26a;
+        }
+
+        .btn_curators {
+            background-color: #c43c2d;
+        }
+
+        .btn_admins {
+            background-color: #06f26a;
+        }
+
+        .btn_schools {
+            background-color: #A5D061;
+        }
+
+        .btn_teachers {
+            background-color: #90D0A1;
+        }
+
+        .btn_students {
+            background-color: #B3D078;
+        }
+
+        .btn_schoolCurators {
+            background-color: #CCD047;
+        }
+
+        .dashboard_textColor {
+            color: #83CB1E;
+        }
+
+        .link_atag {
+            color: green;
+            text-decoration-line: underline;
+        }
+
+        .animation_effect {
+        {#background-color: #f1f2f6;#} padding-bottom: 20vh;
+            animation: slide-up 2s;
+        }
+
+        @keyframes slide-up {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+{% endblock %}

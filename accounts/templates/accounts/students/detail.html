@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% load widget_tweaks static %}
+{% load static %}
+
+{% block title %}
+    Student Detail
+{% endblock %}
+
+{% block content %}
+    <!-- +++++++++++++++++++++++++++++++++++++++  Style  ++++++++++++++++++++++++++++++++++++++ -->
+
+    <div class="mdk-drawer-layout__content subject_page">
+        <div class="container-fluid" style="width: 70%; margin-left: 15%;">
+            <div class="w3-card-4 student_background_title">
+                <h1 class="h2 w3-center" style="color: #06f26a; font-weight: bold;">
+                    Student: {{ student.user.get_full_name }}</h1>
+            </div>
+            <div class="fresh-table full-screen-table table-bordered full-color-blue" style="border-radius: 7px;">
+                <div class="table-responsive border-bottom">
+                    <div class="toolbar" data-toggle="lists" data-lists-values='["js-lists-values-employee-name"]'>
+                        <div class="w3-btn example_d btn_admins w3-left" style="text-decoration-line: none;"
+                             onclick="history.back()">
+                            <a><i class="fas fa-arrow-left"></i> Back</a>
+                        </div>
+                        <div class="w3-btn example_d btn_admins w3-left" style="text-decoration-line: none;"
+                             onclick="history.forward()">
+                            <a>GoForward <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <table id="fresh-table" class="table">
+                        <thead class="w3-hover-indigo">
+                        <th data-field="school"><a class="student_margin_style">User Name</a></th>
+                        <th data-field="username"><a>{{ student.user.username }}</a></th>
+                        </thead>
+                        <tbody class="list" id="search">
+                        <tr>
+                            <td><a class="student_margin_style">Name</a></td>
+                            <td><a class="student_margin_style">{{ student.user.get_full_name }}</a></td>
+                        </tr>
+
+                        <tr>
+                            <td><a class="student_margin_style">Address</a></td>
+                            <td><a class="student_margin_style">{{ student.user.address }}</a></td>
+                        </tr>
+
+                        <tr>
+                            <td><a class="student_margin_style">Phone</a></td>
+                            <td><a class="student_margin_style">{{ student.user.phone }}</a></td>
+                        </tr>
+
+                        <tr>
+                            <td><a class="student_margin_style">Mobile</a></td>
+                            <td><a class="student_margin_style">{{ student.user.mobile }}</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Javascript -->
+
+    <script src="{% static "vendor/jquery.min.js" %}"></script>
+    <script src="{% static "vendor/bootstrap-table.min.js" %}"></script>
+
+    <script type="text/javascript">
+        const $table = $('#fresh-table');
+        const $alertBtn = $('#alertBtn');
+
+        window.operateEvents = {
+            'click .like': function (e, value, row, index) {
+                alert('You click like icon, row: ' + JSON.stringify(row))
+                console.log(value, row, index)
+            },
+            'click .edit': function (e, value, row, index) {
+                alert('You click edit icon, row: ' + JSON.stringify(row))
+                console.log(value, row, index)
+            },
+            'click .remove': function (e, value, row, index) {
+                $table.bootstrapTable('remove', {field: 'id', values: [row.id]})
+            }
+        }
+
+        function operateFormatter(value, row, index) {
+            return [
+                '<a rel="tooltip" title="Like" class="table-action like" href="javascript:void(0)" title="Like">',
+                '<i class="fa fa-heart"></i>',
+                '</a>',
+                '<a rel="tooltip" title="Edit" class="table-action edit" href="javascript:void(0)" title="Edit">',
+                '<i class="fa fa-edit"></i>',
+                '</a>',
+                '<a rel="tooltip" title="Remove" class="table-action remove" href="javascript:void(0)" title="Remove">',
+                '<i class="fa fa-remove"></i>',
+                '</a>'
+            ].join('')
+        }
+
+        $(function () {
+            $table.bootstrapTable({
+                classes: 'table table-hover table-striped',
+                toolbar: '.toolbar',
+
+                search: true,
+                showRefresh: true,
+                showToggle: true,
+                showColumns: true,
+                pagination: true,
+                striped: true,
+                sortable: true,
+                pageSize: 8,
+                pageList: [8, 10, 25, 50, 100],
+
+                formatShowingRows: function (pageFrom, pageTo, totalRows) {
+                    return ''
+                },
+                formatRecordsPerPage: function (pageNumber) {
+                    return pageNumber + ' rows visible'
+                }
+            })
+
+            $alertBtn.click(function () {
+                alert('You pressed on Alert')
+            })
+        })
+    </script>
+    <!-- Fonts and icons -->
+    <style>
+        [dir=ltr] .modal-backdrop {
+            position: unset !important;
+        }
+
+        .subject_page {
+            align-content: center;
+            width: 100%;
+        }
+
+        .example_d {
+            text-transform: uppercase;
+            border-radius: 12px;
+            display: inline-block;
+            transition: all 0.3s ease 0s;
+            margin-right: 20px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .example_d:hover {
+            color: green !important;
+            border-radius: 20px;
+            border-color: #494949 !important;
+            transition: all 0.3s ease 0s;
+        }
+
+        .btn_admins {
+            background-color: #544CD0;
+        }
+
+        .student_background_title {
+            background-image: linear-gradient(45deg, #2e89fe, #8900fe 50%, #00e8fe);
+            border-radius: 10px;
+        }
+
+        .student_margin_style {
+            margin-left: 12px;
+        }
+
+        .animation_effect {
+        {#background-color: #f1f2f6;#}
+            padding-bottom: 20vh;
+            animation: slide-up 2s;
+        }
+
+        @keyframes slide-up {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+{% endblock %}
