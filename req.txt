@@ -14,7 +14,7 @@ colorama==0.3.7
 configobj==5.0.6
 constantly==15.1.0
 distro-info
-Django==2.2.3
+Django==2.2.28
 django-bootstrap-breadcrumbs==0.9.1
 django-braces==1.13.0
 django-countries==5.3.3
